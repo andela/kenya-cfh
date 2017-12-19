@@ -15,7 +15,8 @@
   "scripts": {
     "start": "node node_modules/grunt-cli/bin/grunt",
     "test": "node node_modules/grunt-cli/bin/grunt test",
-    "postinstall": "node node_modules/grunt-cli/bin/grunt install"
+    "postinstall": "node node_modules/grunt-cli/bin/grunt install",
+    "lint": "node_modules/.bin/eslint ./"
   },
   "dependencies": {
     "async": "~0.2.9",
@@ -47,6 +48,8 @@
   },
   "devDependencies": {
     "eslint": "^4.13.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
     "grunt": "~0.4.1",
     "grunt-concurrent": "~0.4.0",
     "grunt-contrib-jshint": "~0.6.4",
