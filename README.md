@@ -1,4 +1,5 @@
 ![HoundCI](https://img.shields.io/badge/hound--ci-protected-green.svg?branch=staging)
+[![Coverage Status](https://coveralls.io/repos/github/andela/kenya-cfh/badge.svg?branch=chore%2F%23153756401%2FIntegrate-Coveralls-code-coverage-service)](https://coveralls.io/github/andela/kenya-cfh?branch=chore%2F%23153756401%2FIntegrate-Coveralls-code-coverage-service)
 
 Cards for Humanity - [http://cfh.io](http://cfh.io)
 ===========
