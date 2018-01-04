@@ -90,4 +90,4 @@ gulp.task('install', ['bower']);
   
 gulp.task('build', ['sass', 'transfer-bower']);
   
-gulp.task('default', ['nodemon', 'watch']);
+gulp.task('default', ['build', 'nodemon', 'watch']);

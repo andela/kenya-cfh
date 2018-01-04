@@ -13,11 +13,13 @@
     "npm": "3.10.10"
   },
   "scripts": {
-    "start": "node node_modules/gulp/bin/gulp build && node node_modules/gulp/bin/gulp",
+    "start": "node server.js",
+    "start:dev": "node node_modules/.bin/gulp",
     "test": "node node_modules/.bin/gulp test",
     "postinstall": "node node_modules/gulp/bin/gulp install",
     "lint": "node_modules/.bin/eslint ./",
-    "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls",
+    "heroku-postinstall": "node node_modules/.bin/gulp build"
   },
   "dependencies": {
     "async": "~0.2.9",
