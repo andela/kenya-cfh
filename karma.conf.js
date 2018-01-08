@@ -17,11 +17,12 @@ module.exports = function(config) {
     files: [ 
       './node_modules/angular/angular.js',                             
       './node_modules/angular-ui-router/release/angular-ui-router.js', 
-      './node_modules/angular-mocks/angular-mocks.js',                 
-      './app/services/users/users.js',                                 
-      './app/app.js',
-      './app/services/users/users.spec.js'
-    ],
+      './node_modules/angular-mocks/angular-mocks.js',
+      './public/js/app.js', 
+      './public/js/services/global.js', 
+      './public/js/controllers/header.js', 
+      './public/js/controllers/header.spec.js',              
+      ],
 
 
     // list of files to exclude
