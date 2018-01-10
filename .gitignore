@@ -6,3 +6,4 @@ c4h_keys.txt
 .env
 .nyc_output/
 bower_components/
+dist/
