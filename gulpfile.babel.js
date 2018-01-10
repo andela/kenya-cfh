@@ -91,8 +91,8 @@ gulp.task('transfer-public', ['sass'], () => {
 
 gulp.task('transfer-bower', ['jquery', 'angular', 'bootstrap', 'angularUtils', 'underscore', 'angular-bootstrap']);
   
-gulp.task('test', () => {
-    gulp.src('./test/**/*.js')
+gulp.task('mochaTest', () => {
+    gulp.src('./dist/test/**/*.js')
       .pipe(mocha({
         reporter: 'spec',
         timeout: '500000'
@@ -113,9 +113,11 @@ gulp.task('nodemon', () => {
     }
   });
 });
-  
+
 gulp.task('install', ['bower']);
-  
+
 gulp.task('build', ['sass', 'transfer-public', 'babel', 'transfer-json', 'transfer-jade', 'transfer-bower']);
-  
+
+gulp.task('test', ['mochaTest']);
+
 gulp.task('default', ['build', 'nodemon', 'watch']);
