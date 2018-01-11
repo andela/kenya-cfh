@@ -159,12 +159,6 @@ Game.prototype.stateChoosing = function(self) {
   }
   self.round++;
   self.dealAnswers();
-  // Rotate card czar
-  if (self.czar >= self.players.length - 1) {
-    self.czar = 0;
-  } else {
-    self.czar++;
-  }
   self.sendUpdate();
 
   self.choosingTimeout = setTimeout(function() {
@@ -217,7 +211,7 @@ Game.prototype.stateResults = function(self) {
     if (winner !== -1) {
       self.stateEndGame(winner);
     } else {
-      self.stateChoosing(self);
+      self.newCzar(self)
     }
   }, self.timeLimits.stateResults*1000);
 };
@@ -258,7 +252,7 @@ Game.prototype.shuffleCards = function(cards) {
   var temp;
   var randNum;
 
-  while(shuffleIndex) {
+  while (shuffleIndex) {
     randNum = Math.floor(Math.random() * shuffleIndex--);
     temp = cards[randNum];
     cards[randNum] = cards[shuffleIndex];
@@ -269,19 +263,18 @@ Game.prototype.shuffleCards = function(cards) {
 };
 
 Game.prototype.dealAnswers = function(maxAnswers) {
-  var self = this;
   maxAnswers = maxAnswers || 10;
   var storeAnswers = function(err, data) {
-    self.answers = data;
+    this.answers = data;
   };
-  this.players.map((player) => {
-    while (player.hand.length < maxAnswers) {
-      player.hand.push(this.answers.pop());
+  for (var i = 0; i < this.players.length; i++) {
+    while (this.players[i].hand.length < maxAnswers) {
+      this.players[i].hand.push(this.answers.pop());
       if (!this.answers.length) {
         this.getAnswers(storeAnswers);
       }
     }
-  });
+  }
 };
 
 Game.prototype._findPlayerIndexBySocket = function(thisPlayer) {
@@ -394,7 +387,6 @@ Game.prototype.removePlayer = function(thisPlayer) {
       }
       this.sendNotification(playerName+' has left the game.');
     }
-
     this.sendUpdate();
   }
 };
@@ -423,7 +415,7 @@ Game.prototype.pickWinning = function(thisCard, thisPlayer, autopicked) {
     }
   } else {
     // TODO: Do something?
-    self.sendUpdate();
+    this.sendUpdate();
   }
 };
 
@@ -440,11 +432,19 @@ Game.prototype.newCzar = (self) => {
   self.table = [];
   if (self.czar >= self.players.length - 1) {
     self.czar = 0;
-    console.log(self.czar);
   } else {
     self.czar += 1;
   }
   self.sendUpdate();
+};
+
+//start another round
+Game.prototype.startNextGameRound = (self) => {
+  if (self.state === 'czar pick card') {
+    self.stateChoosing(self);
+  } else if (self.state === 'czar left game') {
+    self.newCzar(self);
+  }
 };
 
 module.exports = Game;

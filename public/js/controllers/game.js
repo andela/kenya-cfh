@@ -109,6 +109,10 @@ angular.module('mean.system')
         $scope.startGame = () => {
           game.startGame();
         };
+        
+        $scope.startNextGameRound = () => {
+          game.startNextGameRound();
+        }
 
         $scope.abandonGame = () => {
           game.leaveGame();

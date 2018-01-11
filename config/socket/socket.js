@@ -1,4 +1,4 @@
-var Game = require('./game');
+import Game from './game';
 var Player = require('./player');
 require("console-stamp")(console, "m/dd HH:MM:ss");
 var mongoose = require('mongoose');
@@ -49,7 +49,6 @@ module.exports = function(io) {
     });
 
     socket.on('startGame', function() {
-     
       if (allGames[socket.gameID]) {
         var thisGame = allGames[socket.gameID];
         console.log('comparing',thisGame.players[0].socket.id,'with',socket.id);
@@ -61,9 +60,13 @@ module.exports = function(io) {
             }
           });
           thisGame.prepareGame();
-          thisGame.sendNotification('The game has begun!');
+          thisGame.sendNotification('The game has begun, wait for czar to draw cards');
         }
       }
+    });
+
+    socket.on('czarSelectCard', () => {
+      allGames[socket.gameID].startNextGameRound(allGames[socket.gameID])
     });
 
     socket.on('leaveGame', function() {
