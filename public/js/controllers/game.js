@@ -82,6 +82,7 @@ angular.module('mean.system')
     };
 
     $scope.isCzar = function() {
+      //console.log('this is the isCzar' , game.czar === game.playerIndex)
       return game.czar === game.playerIndex;
     };
 
@@ -146,6 +147,16 @@ angular.module('mean.system')
     $scope.$watch('game.state', function() {
       if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
         $scope.showTable = true;
+      }
+     
+      console.log('table',game.table.length)
+      console.log('state', game.state);
+      console.log('czar', $scope.isCzar())
+      if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
+         console.log('logging=========');
+        $('#myModal').modal('show');
+      } else {
+        $('.modal-close').trigger('click');
       }
     });
 
