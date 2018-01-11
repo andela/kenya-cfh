@@ -193,6 +193,10 @@ angular.module('mean.system')
     socket.emit('startGame');
   };
 
+  game.startNextGameRound = function() {
+    socket.emit('czarSelectCard');
+  }
+
   game.leaveGame = function() {
     game.players = [];
     game.time = 0;

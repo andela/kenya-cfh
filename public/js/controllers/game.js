@@ -125,6 +125,10 @@ angular.module('mean.system')
       game.startGame();
     };
 
+    $scope.startNextGameRound = function() {
+      game.startNextGameRound();
+    }
+
     $scope.abandonGame = function() {
       game.leaveGame();
       $location.path('/');
