@@ -1,6 +1,6 @@
 angular.module('mean.system')
   .factory('Global', [function() {
-    var _this = this;
+    const _this = this;
     _this._data = {
         user: window.user,
         authenticated: !! localStorage.getItem('token')

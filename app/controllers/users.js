@@ -67,7 +67,7 @@ exports.session = (req, res) => {
   res.redirect('/');
 };
 
-/** 
+/**
  * Check avatar - Confirm if the user who logged in via passport
  * already has an avatar. If they don't have one, redirect them
  * to our Choose an Avatar page.
@@ -140,7 +140,9 @@ exports.create = (req, res) => {
       });
     });
   })
-    .catch(error => res.status(500).json({ err: error.message }));
+    .catch(() => res.status(500).json({
+      message: 'Opps.. An error occured. Try again soon.'
+    }));
 };
 
 /**
@@ -159,6 +161,12 @@ exports.login = (req, res) => {
   User.findOne({
     email: req.body.email
   }).then((foundUser) => {
+    if (!foundUser) {
+      return res.status(401).json({
+        status: 'Error',
+        message: 'Invalid email or password'
+      });
+    }
     if (!foundUser.authenticate(req.body.password)) {
       return res.status(401).json({
         status: 'Error',
@@ -178,9 +186,9 @@ exports.login = (req, res) => {
         token,
       }
     });
-  }).catch((error) => {
-    return res.status(400).send(error.message);
-  });
+  }).catch(() => res.status(500).json({
+    message: 'Opps.. An error occured. Try again soon.'
+  }));
 };
 
 /**
