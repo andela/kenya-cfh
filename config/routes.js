@@ -7,7 +7,8 @@ module.exports = function(app, passport, auth) {
     app.get('/signup', users.signup);
     app.get('/chooseavatars', users.checkAvatar);
     app.get('/signout', users.signout);
-    app.get('/api/search/users', users.searchUser);
+    app.get('/api/search', users.searchUser);
+    app.post('/api/users/invite', users.inviteUser);
 
     //Setting up the users api
     app.post('/users', users.create);
@@ -38,6 +39,7 @@ module.exports = function(app, passport, auth) {
     app.get('/auth/github', passport.authenticate('github', {
         failureRedirect: '/signin'
     }), users.signin);
+    
 
     app.get('/auth/github/callback', passport.authenticate('github', {
         failureRedirect: '/signin'
