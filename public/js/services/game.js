@@ -73,6 +73,10 @@ angular.module('mean.system')
       socket.on('gameUpdate', (data) => {
         // Update gameID field only if it changed.
         // That way, we don't trigger the $scope.$watch too often
+        if(data.state === 'czar pick card') {
+          game.czar = data.czar;
+        }
+        
         if (game.gameID !== data.gameID) {
           game.gameID = data.gameID;
         }

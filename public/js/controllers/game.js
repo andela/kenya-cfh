@@ -139,6 +139,19 @@ angular.module('mean.system')
             $('#few-players-modal').modal('show');
           }
         };
+        
+    // In case player doesn't pick a card in time, show the table
+    $scope.$watch('game.state', () =>  {
+      if (game.state === 'waiting for czar to decide' && $scope.showTable === false) {
+        $scope.showTable = true;
+      }
+
+      if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
+        $('#myModal').modal('show');
+      } else {
+        $('.modal-close').trigger('click');
+      }
+    });
 
         // In case player doesn't pick a card in time, show the table
         $scope.$watch('game.state', () => {
