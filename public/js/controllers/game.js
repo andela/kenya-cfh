@@ -41,6 +41,11 @@ angular.module('mean.system')
       $scope.showTable = true;
     };
 
+    $scope.popModal= () =>{
+      $('#searchControl').hide();
+      $('#invite-players-modal').modal('show');
+    }
+
     $scope.cardIsFirstSelected = function(card) {
       if (game.curQuestion.numAnswers > 1) {
         return card === $scope.pickedCards[0];
