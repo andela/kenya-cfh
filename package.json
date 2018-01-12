@@ -15,6 +15,7 @@
   "scripts": {
     "build": "node node_modules/.bin/gulp build",
     "heroku-postbuild": "npm run build",
+    "locbuild": "npm run build && npm run start:dev",
     "start": "node dist/server.js",
     "start:dev": "node node_modules/.bin/gulp",
     "test": "npm run heroku-postbuild && node node_modules/.bin/gulp test",
