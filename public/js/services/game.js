@@ -1,8 +1,7 @@
 angular.module('mean.system')
   .factory('game', ['socket', '$timeout', (socket, $timeout) => {
-
     const game = {
-      id: null, // This player's socket ID, so we know who this player is
+      id: null,
       gameID: null,
       players: [],
       playerIndex: 0,
@@ -30,20 +29,18 @@ angular.module('mean.system')
 
     const setNotification = () => {
       if (notificationQueue.length === 0) {
-        // If notificationQueue is empty, stop
         clearInterval(timeout);
         timeout = false;
         game.notification = '';
       } else {
-        // Show a notification and check again in a bit
         game.notification = notificationQueue.shift();
         timeout = $timeout(setNotification, 1300);
       }
     };
 
-    const addToNotificationQueue = (msg) => {
-      notificationQueue.push(msg);
-      if (!timeout) { // Start a cycle if there isn't one
+    const addToNotificationQueue = (message) => {
+      notificationQueue.push(message);
+      if (!timeout) {
         setNotification();
       }
     };
@@ -70,8 +67,6 @@ angular.module('mean.system')
     });
 
     socket.on('gameUpdate', (data) => {
-    // Update gameID field only if it changed.
-    // That way, we don't trigger the $scope.$watch too often
       if (data.state === 'czar pick card') {
         game.czar = data.czar;
       }
@@ -83,17 +78,14 @@ angular.module('mean.system')
       game.joinOverride = false;
       clearTimeout(game.joinOverrideTimeout);
 
-      let i;
-      // Cache the index of the player in the players array
-      for (i = 0; i < data.players.length; i += 1) {
-        if (game.id === data.players[i].socketID) {
-          game.playerIndex = i;
+      data.players.map((player, index) => {
+        if (game.id === player.socketID) {
+          game.playerIndex = index;
         }
-      }
+      });
 
       const newState = (data.state !== game.state);
 
-      // Handle updating game.time
       if (data.round !== game.round && data.state !== 'awaiting players' &&
       data.state !== 'game ended' && data.state !== 'game dissolved') {
         game.time = game.timeLimits.stateChoosing - 1;
@@ -106,7 +98,6 @@ angular.module('mean.system')
         timeSetViaUpdate = true;
       }
 
-      // Set these properties on each update
       game.round = data.round;
       game.winningCard = data.winningCard;
       game.winningCardPlayer = data.winningCardPlayer;
@@ -114,7 +105,6 @@ angular.module('mean.system')
       game.gameWinner = data.gameWinner;
       game.pointLimit = data.pointLimit;
 
-      // Handle updating game.table
       if (data.table.length === 0) {
         game.table = [];
       } else {
@@ -127,20 +117,21 @@ angular.module('mean.system')
           _.pluck(data.table, 'player')
         );
 
-        for (i = 0; i < added.length; i += 1) {
-          for (var j = 0; j < data.table.length; j += 1) {
-            if (added[i] === data.table[j].player) {
-              game.table.push(data.table[j], 1);
+        added.map((singleAdded) => {
+          data.table.map((table) => {
+            if (singleAdded === table.player) {
+              game.table.push(table, 1);
             }
-          }
-        }
-        for (i = 0; i < removed.length; i += 1) {
-          for (var k = 0; k < game.table.length; k += 1) {
-            if (removed[i] === game.table[k].player) {
-              game.table.splice(k, 1);
+          });
+        });
+
+        removed.map((singleRemoved) => {
+          game.table.map((table, tableIndex) => {
+            if (singleRemoved === table.player) {
+              game.table.splice(tableIndex, 1);
             }
-          }
-        }
+          });
+        });
       }
 
       if (game.state !== 'waiting for players to pick' ||
@@ -155,10 +146,8 @@ angular.module('mean.system')
       if (data.state === 'waiting for players to pick') {
         game.czar = data.czar;
         game.curQuestion = data.curQuestion;
-        // Extending the underscore within the question
         game.curQuestion.text = data.curQuestion.text.replace(/_/g, '<u></u>');
 
-        // Set notifications only when entering state
         if (newState) {
           if (game.czar === game.playerIndex) {
             addToNotificationQueue('You\'re the Card Czar! Please wait!');
@@ -192,7 +181,7 @@ angular.module('mean.system')
       addToNotificationQueue(data.notification);
     });
 
-    game.joinGame = (mode,room,createPrivate) => {
+    game.joinGame = (mode, room, createPrivate) => {
       mode = mode || 'joinGame';
       room = room || '';
       createPrivate = createPrivate || false;
