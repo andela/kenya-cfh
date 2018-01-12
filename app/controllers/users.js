@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import validateSignup from '../validators/validateSignup';
 import validateSignin from '../validators/validateSignin';
+import nodemailer from 'nodemailer';
 /**
  * Module dependencies.
  */
