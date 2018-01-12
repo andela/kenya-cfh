@@ -42,198 +42,190 @@ angular.module('mean.system')
         }
       };
 
-      const addToNotificationQueue = (msg) => {
-        notificationQueue.push(msg);
-        if (!timeout) { // Start a cycle if there isn't one
-          setNotification();
-        }
-      };
+    const addToNotificationQueue = (message) => {
+      notificationQueue.push(message);
+      if (!timeout) {
+        setNotification();
+      }
+    };
 
-      let timeSetViaUpdate = false;
-      const decrementTime = () => {
-        if (game.time > 0 && !timeSetViaUpdate) {
-          game.time -= 1;
-        } else {
-          timeSetViaUpdate = false;
-        }
-        $timeout(decrementTime, 950);
-      };
+    let timeSetViaUpdate = false;
+    const decrementTime = () => {
+      if (game.time > 0 && !timeSetViaUpdate) {
+        game.time -= 1;
+      } else {
+        timeSetViaUpdate = false;
+      }
+      $timeout(decrementTime, 950);
+    };
 
-      socket.on('id', (data) => {
-        game.id = data.id;
+    socket.on('id', (gameData) => {
+      game.id = gameData.id;
+    });
+
+    socket.on('prepareGame', (gameData) => {
+      game.playerMinLimit = gameData.playerMinLimit;
+      game.playerMaxLimit = gameData.playerMaxLimit;
+      game.pointLimit = gameData.pointLimit;
+      game.timeLimits = gameData.timeLimits;
+    });
+
+    socket.on('gameUpdate', (gameData) => {
+      if (gameData.state === 'czar pick card') {
+        game.czar = gameData.czar;
+      }
+
+      if (game.gameID !== gameData.gameID) {
+        game.gameID = gameData.gameID;
+      }
+
+      game.joinOverride = false;
+      clearTimeout(game.joinOverrideTimeout);
+
+      gameData.players.map((player, index) => {
+        if (game.id === player.socketID) {
+          game.playerIndex = index;
+        }
       });
 
-      socket.on('prepareGame', (data) => {
-        game.playerMinLimit = data.playerMinLimit;
-        game.playerMaxLimit = data.playerMaxLimit;
-        game.pointLimit = data.pointLimit;
-        game.timeLimits = data.timeLimits;
-      });
+      const newState = (gameData.state !== game.state);
 
-      socket.on('gameUpdate', (data) => {
-        // Update gameID field only if it changed.
-        // That way, we don't trigger the $scope.$watch too often
-        if(data.state === 'czar pick card') {
-          game.czar = data.czar;
-        }
-        
-        if (game.gameID !== data.gameID) {
-          game.gameID = data.gameID;
-        }
+      if (gameData.round !== game.round && gameData.state !== 'awaiting players' &&
+      gameData.state !== 'game ended' && gameData.state !== 'game dissolved') {
+        game.time = game.timeLimits.stateChoosing - 1;
+        timeSetViaUpdate = true;
+      } else if (newState && gameData.state === 'waiting for czar to decide') {
+        game.time = game.timeLimits.stateJudging - 1;
+        timeSetViaUpdate = true;
+      } else if (newState && gameData.state === 'winner has been chosen') {
+        game.time = game.timeLimits.stateResults - 1;
+        timeSetViaUpdate = true;
+      }
 
-        game.joinOverride = false;
-        clearTimeout(game.joinOverrideTimeout);
+      game.round = gameData.round;
+      game.winningCard = gameData.winningCard;
+      game.winningCardPlayer = gameData.winningCardPlayer;
+      game.winnerAutopicked = gameData.winnerAutopicked;
+      game.gameWinner = gameData.gameWinner;
+      game.pointLimit = gameData.pointLimit;
 
-        let i;
-        // Cache the index of the player in the players array
-        for (i = 0; i < data.players.length; i += 1) {
-          if (game.id === data.players[i].socketID) {
-            game.playerIndex = i;
-          }
-        }
+      if (gameData.table.length === 0) {
+        game.table = [];
+      } else {
+        const added = underscoreUtils.difference(
+          underscoreUtils.pluck(gameData.table, 'player'),
+          underscoreUtils.pluck(game.table, 'player')
+        );
+        const removed = underscoreUtils.difference(
+          underscoreUtils.pluck(game.table, 'player'),
+          underscoreUtils.pluck(gameData.table, 'player')
+        );
 
-        const newState = (data.state !== game.state);
-
-        // Handle updating game.time
-        if (data.round !== game.round && data.state !== 'awaiting players' &&
-          data.state !== 'game ended' && data.state !== 'game dissolved') {
-          game.time = game.timeLimits.stateChoosing - 1;
-          timeSetViaUpdate = true;
-        } else if (newState && data.state === 'waiting for czar to decide') {
-          game.time = game.timeLimits.stateJudging - 1;
-          timeSetViaUpdate = true;
-        } else if (newState && data.state === 'winner has been chosen') {
-          game.time = game.timeLimits.stateResults - 1;
-          timeSetViaUpdate = true;
-        }
-
-        // Set these properties on each update
-        game.round = data.round;
-        game.winningCard = data.winningCard;
-        game.winningCardPlayer = data.winningCardPlayer;
-        game.winnerAutopicked = data.winnerAutopicked;
-        game.gameWinner = data.gameWinner;
-        game.pointLimit = data.pointLimit;
-
-        // Handle updating game.table
-        if (data.table.length === 0) {
-          game.table = [];
-        } else {
-          const added = _.difference(
-            _.pluck(data.table, 'player'),
-            _.pluck(game.table, 'player')
-          );
-          const removed = _.difference(
-            _.pluck(game.table, 'player'),
-            _.pluck(data.table, 'player')
-          );
-          for (i = 0; i < added.length; i += 1) {
-            for (let j = 0; j < data.table.length; j += 1) {
-              if (added[i] === data.table[j].player) {
-                game.table.push(data.table[j], 1);
-              }
+        added.map((singleAdded) => {
+          gameData.table.map((table) => {
+            if (singleAdded === table.player) {
+              game.table.push(table, 1);
             }
-          }
-          for (i = 0; i < removed.length; i += 1) {
-            for (let k = 0; k < game.table.length; k += 1) {
-              if (removed[i] === game.table[k].player) {
-                game.table.splice(k, 1);
-              }
+          });
+        });
+
+        removed.map((singleRemoved) => {
+          game.table.map((table, tableIndex) => {
+            if (singleRemoved === table.player) {
+              game.table.splice(tableIndex, 1);
             }
-          }
-        }
+          });
+        });
+      }
 
-        if (game.state !== 'waiting for players to pick'
-        || game.players.length !== data.players.length) {
-          game.players = data.players;
-        }
+      if (game.state !== 'waiting for players to pick' ||
+       game.players.length !== gameData.players.length) {
+        game.players = gameData.players;
+      }
 
-        if (newState || game.curQuestion !== data.curQuestion) {
-          game.state = data.state;
-        }
+      if (newState || game.curQuestion !== gameData.curQuestion) {
+        game.state = gameData.state;
+      }
 
-        if (data.state === 'waiting for players to pick') {
-          game.czar = data.czar;
-          game.curQuestion = data.curQuestion;
-          // Extending the underscore within the question
-          game.curQuestion.text = data.curQuestion.text.replace(
-            /_/g,
-            '<u></u>'
-          );
+      if (gameData.state === 'waiting for players to pick') {
+        game.czar = gameData.czar;
+        game.curQuestion = gameData.curQuestion;
+        game.curQuestion.text = gameData.curQuestion.text.replace(/_/g, '<u></u>');
 
-          // Set notifications only when entering state
-          if (newState) {
-            if (game.czar === game.playerIndex) {
-              addToNotificationQueue('You\'re the Card Czar! Please wait!');
-            } else if (game.curQuestion.numAnswers === 1) {
-              addToNotificationQueue('Select an answer!');
-            } else {
-              addToNotificationQueue('Select TWO answers!');
-            }
-          }
-        } else if (data.state === 'waiting for czar to decide') {
+        if (newState) {
           if (game.czar === game.playerIndex) {
-            addToNotificationQueue("Everyone's done. Choose the winner!");
+            addToNotificationQueue('You\'re the Card Czar! Please wait!');
+          } else if (game.curQuestion.numAnswers === 1) {
+            addToNotificationQueue('Select an answer!');
           } else {
-            addToNotificationQueue('The czar is contemplating...');
+            addToNotificationQueue('Select TWO answers!');
           }
-        } else if (data.state === 'winner has been chosen' &&
-                  game.curQuestion.text.indexOf('<u></u>') > -1) {
-          game.curQuestion = data.curQuestion;
-        } else if (data.state === 'awaiting players') {
-          joinOverrideTimeout = $timeout(() => {
-            game.joinOverride = true;
-          }, 15000);
-        } else if (data.state === 'game dissolved'
-        || data.state === 'game ended') {
-          game.players[game.playerIndex].hand = [];
-          game.time = 0;
         }
-      });
-
-      socket.on('notification', (data) => {
-        addToNotificationQueue(data.notification);
-      });
-
-      socket.on('saveGame', (data) => {
-        if (game.state === 'game ended' && window.localStorage.token) {
-          $http.post(
-            `api/v1/games/${game.gameID}/start`,
-            data,
-            { headers: { 'x-token': window.localStorage.token } }
-          )
-            .then(response => response, error => error);
+      } else if (gameData.state === 'waiting for czar to decide') {
+        if (game.czar === game.playerIndex) {
+          addToNotificationQueue("Everyone's done. Choose the winner!");
+        } else {
+          addToNotificationQueue('The czar is contemplating...');
         }
-      });
-
-      game.joinGame = (mode, room, createPrivate) => {
-        mode = mode || 'joinGame';
-        room = room || '';
-        createPrivate = createPrivate || false;
-        const userID = !!window.user ? user._id : 'unauthenticated';
-        socket.emit(mode, { userID, room, createPrivate });
-      };
-
-      game.startGame = () => {
-        socket.emit('startGame');
-      };
-
-      game.leaveGame = () => {
-        game.players = [];
+      } else if (gameData.state === 'winner has been chosen' &&
+              game.curQuestion.text.indexOf('<u></u>') > -1) {
+        game.curQuestion = gameData.curQuestion;
+      } else if (gameData.state === 'awaiting players') {
+        joinOverrideTimeout = $timeout(() => {
+          game.joinOverride = true;
+        }, 15000);
+      } else if (gameData.state === 'game dissolved' ||
+       gameData.state === 'game ended') {
+        game.players[game.playerIndex].hand = [];
         game.time = 0;
-        socket.emit('leaveGame');
-      };
+      }
+    });
 
-      game.pickCards = (cards) => {
-        socket.emit('pickCards', { cards });
-      };
+    socket.on('notification', (gameData) => {
+      addToNotificationQueue(gameData.notification);
+    });
 
-      game.pickWinning = (card) => {
-        socket.emit('pickWinning', { card: card.id });
-      };
+    socket.on('saveGame', (data) => {
+      if (game.state === 'game ended' && window.localStorage.token) {
+        $http.post(
+          `api/v1/games/${game.gameID}/start`,
+          data,
+          { headers: { 'x-token': window.localStorage.token } }
+        )
+        .then(response => response, error => error);
+      }
+    });
+    game.joinGame = (mode, room, createPrivate) => {
+      mode = mode || 'joinGame';
+      room = room || '';
+      createPrivate = createPrivate || false;
+      const userID = !!window.user ? user._id : 'unauthenticated';
+      socket.emit(mode, { userID, room, createPrivate });
+    };
 
-      decrementTime();
+    game.startGame = () => {
+      socket.emit('startGame');
+    };
 
-      return game;
-    }]
-  );
+    game.startNextGameRound = () => {
+      socket.emit('czarSelectCard');
+    };
+
+    game.leaveGame = () => {
+      game.players = [];
+      game.time = 0;
+      socket.emit('leaveGame');
+    };
+
+    game.pickCards = (cards) => {
+      socket.emit('pickCards', { cards });
+    };
+
+    game.pickWinning = (card) => {
+      socket.emit('pickWinning', { card: card.id });
+    };
+
+    decrementTime();
+
+    return game;
+  }]);
