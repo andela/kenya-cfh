@@ -40,7 +40,16 @@ angular.module('mean.system')
       $scope.showTable = true;
     };
 
+<<<<<<< HEAD
     $scope.cardIsFirstSelected = (card) => {
+=======
+    $scope.popModal= () =>{
+            $('#searchControl').hide();
+            $('#invite-players-modal').modal('show');
+          }
+
+    $scope.cardIsFirstSelected = function(card) {
+>>>>>>> feature(increase max number of players): set up backend to handle user invite and increase max number of players
       if (game.curQuestion.numAnswers > 1) {
         return card === $scope.pickedCards[0];
       }
