@@ -11,9 +11,11 @@ module.exports = (app, passport) => {
   app.get('/chooseavatars', users.checkAvatar);
   app.get('/signout', users.signout);
 
+
   // Setting up the users api
   app.post('/api/auth/signup', users.create);
   app.post('/users/avatars', users.avatars);
+  app.post('/api/auth/login', users.login);
 
   // Donation Routes
   app.post('/donations', users.addDonation);

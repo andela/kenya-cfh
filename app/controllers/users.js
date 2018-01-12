@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import validateSignup from '../validators/validateSignup';
+import validateSignin from '../validators/validateSignin';
 /**
  * Module dependencies.
  */
@@ -66,7 +67,7 @@ exports.session = (req, res) => {
   res.redirect('/');
 };
 
-/** 
+/**
  * Check avatar - Confirm if the user who logged in via passport
  * already has an avatar. If they don't have one, redirect them
  * to our Choose an Avatar page.
@@ -96,7 +97,7 @@ exports.checkAvatar = (req, res) => {
  * Create user
  * @param {object} req - the request object
  * @param {object} res - the response object
- * @returns {func} Creates a new user
+ * @returns {object} Creates a new user
  */
 exports.create = (req, res) => {
   const { errors, valid } = validateSignup(req.body);
@@ -139,7 +140,55 @@ exports.create = (req, res) => {
       });
     });
   })
-    .catch(error => res.status(500).json({ err: error.message }));
+    .catch(() => res.status(500).json({
+      message: 'Opps.. An error occured. Try again soon.'
+    }));
+};
+
+/**
+ * Login user
+ * @param {object} req - the request object
+ * @param {object} res - the response object
+ * @returns {object} Login an existing user
+ */
+
+exports.login = (req, res) => {
+
+  const { errors, valid } = validateSignin(req.body);
+  if (!valid) {
+    return res.status(400).send(errors);
+  }
+  User.findOne({
+    email: req.body.email
+  }).then((foundUser) => {
+    if (!foundUser) {
+      return res.status(401).json({
+        status: 'Error',
+        message: 'Invalid email or password'
+      });
+    }
+    if (!foundUser.authenticate(req.body.password)) {
+      return res.status(401).json({
+        status: 'Error',
+        message: 'Invalid email or password'
+      });
+    }
+    const token = jwt.sign(
+      { id: foundUser._id },
+      process.env.SECRET, { expiresIn: '30 days' }
+    );
+    return res.status(200).json({
+      status: 'OK',
+      message: 'Sign in successful.',
+      userDetails: {
+        name: foundUser.name,
+        email: foundUser.email,
+        token,
+      }
+    });
+  }).catch(() => res.status(500).json({
+    message: 'Opps.. An error occured. Try again soon.'
+  }));
 };
 
 /**
@@ -176,7 +225,9 @@ exports.addDonation = (req, res) => {
         // Confirm that this object hasn't already been entered
           let duplicate = false;
           for (let i = 0; i < user.donations.length; i += 1) {
-            if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
+            if (user
+              .donations[i].crowdrise_donation_id === req.body
+                .crowdrise_donation_id) {
               duplicate = true;
             }
           }
