@@ -156,6 +156,17 @@ angular.module('mean.system')
         $('.modal-close').trigger('click');
       }
     });
+        $scope.checkNumOfPlayers = () => {
+          if (game.players.length >= game.playerMinLimit) {
+            $('#startModal').modal({
+              keyboard: false,
+              backdrop: 'static'
+            });
+            $('#startModal').modal('show');
+          } else {
+            $('#few-players-modal').modal('show');
+          }
+        };
 
         // In case player doesn't pick a card in time, show the table
         $scope.$watch('game.state', () => {
