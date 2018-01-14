@@ -4,7 +4,8 @@ module.exports = {
     "env": {
       "node": true,
       "es6": true,
-      "mocha": true
+      "mocha": true,
+      "jquery": true
     },
     "rules": {
       "max-len": [2, 80, 2],
@@ -31,4 +32,16 @@ module.exports = {
           }
       }],
     },
+    "globals": {
+      "angular": false,
+      "document": false,
+      "window": false,
+      "localStorage": false,
+      "introJs": false,
+      "AOS": false,
+      "_": false,
+      "io": false,
+      "event": true,
+      "fetch": true
+    }
 };
