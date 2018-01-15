@@ -1,33 +1,44 @@
+import jwt from 'jsonwebtoken';
+import config from '../env/all';
+
+const { secret } = config;
+
 /**
  * Generic require login routing middleware
+ * @export
+ * @param {object} req
+ * @param {object} res
+ * @param {object} next
+ * @returns {object} response object
  */
-exports.requiresLogin = function(req, res, next) {
-    if (!req.isAuthenticated()) {
-        return res.send(401, 'User is not authorized');
-    }
-    next();
-};
+export function requiresLogin(req, res, next) {
+  const token = req.body.token || req.headers['x-token'] || req.headers.token;
+  if (token) {
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) {
+        res.status(401).send({
+          message: 'Token expired'
+        });
+      } else {
+        req.decoded = decoded;
+        next();
+      }
+    });
+  } else {
+    res.status(403).send({
+      message: 'Token not provided'
+    });
+  }
+}
 
 /**
  * User authorizations routing middleware
  */
-exports.user = {
-    hasAuthorization: function(req, res, next) {
-        if (req.profile.id != req.user.id) {
-            return res.send(401, 'User is not authorized');
-        }
-        next();
+export const user = {
+  hasAuthorization(req, res, next) {
+    if (req.profile.id !== req.user.id) {
+      return res.send(401, 'User is not authorized');
     }
+    next();
+  }
 };
-
-/**
- * Article authorizations routing middleware
- */
-// exports.article = {
-//     hasAuthorization: function(req, res, next) {
-//         if (req.article.user.id != req.user.id) {
-//             return res.send(401, 'User is not authorized');
-//         }
-//         next();
-//     }
-// };
