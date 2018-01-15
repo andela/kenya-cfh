@@ -90,7 +90,6 @@ module.exports = (io) => {
       thisgame.sendNotification(`${player.username} has joined the game!`);
       if (thisgame.players.length >= thisgame.playerMaxLimit) {
         gamesNeedingPlayers.shift();
-        thisgame.prepareGame();
       }
     }
   };
@@ -102,8 +101,11 @@ module.exports = (io) => {
     if (requestedGameId.length && allGames[requestedGameId]) {
       const thisgame = allGames[requestedGameId];
 
-      if (thisgame.state === 'awaiting players' && (!thisgame.players.length ||
-        thisgame.players[0].socket.id !== socket.id)) {
+      if (
+        thisgame.state === 'awaiting players'
+          && (!thisgame.players.length ||
+          thisgame.players[0].socket.id !== socket.id)
+          && (game.players.length < game.playerMaxLimit)) {
         allPlayers[socket.id] = true;
         thisgame.players.push(player);
         socket.join(thisgame.gameID);
@@ -114,15 +116,16 @@ module.exports = (io) => {
         thisgame.sendNotification(`${player.username} has joined the game!`);
         if (thisgame.players.length >= thisgame.playerMaxLimit) {
           gamesNeedingPlayers.shift();
-          thisgame.prepareGame();
         }
+      } else {
+        socket.emit('gameFilledUp');
       }
     } else {
+      // Put players into the general queue
       if (createPrivate) {
-        createGameWithFriends(player, socket);
-      } else {
-        fireGame(player, socket);
+        return createGameWithFriends(player, socket);
       }
+      return fireGame(player, socket);
     }
   };
 

@@ -39,7 +39,7 @@
       "localStorage": false,
       "introJs": false,
       "AOS": false,
-      "_": false,
+      "underscoreUtils": false,
       "io": false,
       "event": true,
       "fetch": true

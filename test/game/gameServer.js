@@ -4,6 +4,8 @@ import supertest from 'supertest';
 import chai from 'chai';
 import app from '../../server';
 
+process.env.NODE_ENV = 'test';
+
 const {
   expect
 } = chai;
@@ -23,13 +25,13 @@ const expiredToken = jwt.sign({
 }, 'expired', {
   expiresIn: '0.001s'
 });
+
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
 // delete all records in User model
 User.collection.drop();
 // delete all records in Game model
 Game.collection.drop();
-
 const userDetails = {
   name: 'tester',
   email: 'tester@gmail.com',
