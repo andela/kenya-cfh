@@ -1,5 +1,9 @@
 angular.module('mean.system')
   .controller('InviteUserController', ['$scope', '$http', ($scope, $http) => {
+    $scope.userNotFound = false;
+    $scope.resultFound = false;
+
+
     $scope.searchUser = () => {
       const { username } = $scope;
       $scope.searchResult = [];
@@ -8,12 +12,22 @@ angular.module('mean.system')
           method: 'GET',
           url: `/api/search?username=${username}`
         }).then((response) => {
-          console.log(response)
           if (response.data) {
             $('#searchControl').show();
+            $('#userNotFound').hide();
+            $('#inviteUserButton').show();
+            // $('#searchResult').show();
             $scope.searchResult = response.data.user;
             $scope.email = response.data.email
+            $scope.resultFound = true;
           }
+        }, (error) => {
+          $scope.userNotFound = true;
+          $('#inviteUserButton').hide();  
+          // $('#searchResult').hide();        
+          setTimeout(() => {
+            $scope.userNotFound = false;            
+          }, 2000)
         });
       } else {
         $scope.searchResult = [];

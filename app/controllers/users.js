@@ -321,13 +321,14 @@ exports.searchUser = (req, res) => {
       from: 'CFH Kenya-33',
       to: req.body.recipient,
       subject: 'Invitation to join a session of cfh',
-      text: `Click the link to join game: ${req.body.gameLink}`,
-      html: `<b>click the link to join game: ${req.body.gameLink}</b>`
+      text: `Your friend, CFH Kenya-33 has invited you to join the game, Card for Humanity. 
+              Click the link to join game: ${req.body.gameLink}`,
+      html: `<b>Your friend, CFH Kenya-33 has invited you to join the game, Card for Humanity. 
+      Click the link to join game: ${req.body.gameLink}</b>`
     };
   
     transporter.sendMail(mailOptions, (error) => {
       if (error) {
-        console.log(error)
         res.status(500).json({
           message: 'An error occured while trying to send your email invite'
         });
