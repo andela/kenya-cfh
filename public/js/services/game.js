@@ -195,6 +195,7 @@ angular.module('mean.system')
         .then(response => response, error => error);
       }
     });
+    
     game.joinGame = (mode, room, createPrivate) => {
       mode = mode || 'joinGame';
       room = room || '';
