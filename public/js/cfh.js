@@ -16,6 +16,8 @@
         offset: 51
     });
 
+    $('body').scroll(()=>{const bodyScroll = $('body').scrollTop;console.log(bodyScroll,'+++');});
+
     // Closes the Responsive Menu on Menu Item Click
     $('.navbar-collapse ul li').click(function () {
         $('.navbar-toggle:visible').click();
