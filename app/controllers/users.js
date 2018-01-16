@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import validateSignup from '../validators/validateSignup';
 import validateSignin from '../validators/validateSignin';
+import nodemailer from 'nodemailer';
 /**
  * Module dependencies.
  */
@@ -287,3 +288,54 @@ exports.user = (req, res, next, id) => {
       next();
     });
 };
+exports.searchUser = (req, res) => {
+  const searchQuery = req.query.username;
+    if (searchQuery === '') {
+      return res.status(400).json({
+        message: 'Enter a value'
+      });
+    }
+    User.find({ name: searchQuery }).exec((error, users) => {
+      if (error) {
+        return res.status(500).json(error);
+      }
+      if (users.length === 0) {
+        return res.status(404).json({
+          message: 'No user found'
+        });
+      }
+      return res.status(200).json({user: users[0].name, email: users[0].email});
+    });
+  };
+  
+  // invite user function
+  exports.inviteUser = (req, res) => {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+      }
+    });
+    const mailOptions = {
+      from: 'CFH Kenya-33',
+      to: req.body.recipient,
+      subject: 'Invitation to join a session of cfh',
+      text: `Your friend, CFH Kenya-33 has invited you to join the game, Card for Humanity. 
+              Click the link to join game: ${req.body.gameLink}`,
+      html: `<b>Your friend, CFH Kenya-33 has invited you to join the game, Card for Humanity. 
+      Click the link to join game: ${req.body.gameLink}</b>`
+    };
+  
+    transporter.sendMail(mailOptions, (error) => {
+      if (error) {
+        res.status(500).json({
+          message: 'An error occured while trying to send your email invite'
+        });
+      } else {
+        res.status(200).json({
+          message: 'Email invite sent successfully'
+        });
+      }
+    });
+  };
