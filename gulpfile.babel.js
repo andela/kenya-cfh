@@ -19,7 +19,7 @@ gulp.task('sass', () => {
 });
 
 gulp.task('watch', () => {
-    gulp.watch('public/css/common.scss', ['sass']);
+    gulp.watch('public/css/creative.min.css', ['sass']);
     gulp.watch('public/css/**', browserSync.reload());
     gulp.watch('app/views/**', browserSync.reload());
     gulp.watch('public/js/**', browserSync.reload());
