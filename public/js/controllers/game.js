@@ -40,6 +40,11 @@ angular.module('mean.system')
       $scope.showTable = true;
     };
 
+    $scope.popModal = () => {
+      $('#searchControl').hide();
+      $('#invite-players-modal').modal('show');
+    };
+
     $scope.cardIsFirstSelected = (card) => {
       if (game.curQuestion.numAnswers > 1) {
         return card === $scope.pickedCards[0];
@@ -149,8 +154,9 @@ angular.module('mean.system')
               const txt = `Give the following link to your friends 
                            so they can join your game: `;
               $('#lobby-how-to-play').text(txt);
-              $('#oh-el').css({ 'text-align': 'center', 'font-size': '22px',
-                'background': 'white', 'color': 'black' }).text(link);
+              $('#oh-el').css({
+                'text-align': 'center', 'font-size': '22px',
+                background: 'white', color: 'black' }).text(link);
             }, 200);
             $scope.modalShown = true;
           }
