@@ -318,9 +318,12 @@ body {
   webkit-tap-highlight-color: #222222;
 }
 
-@media (max-width: 768px){
+@media (min-width: 768px){
     .charity-h2 {
-    font-size: 30px;
+        font-size: 30px;
+    }
+    h3{
+        font-size: 15px
     }
 
 }
@@ -347,3 +350,11 @@ button a{
     font-weight: 900;
 }
 
+button:hover {
+    text-decoration: none;
+    font-size: 30px;
+  }
+
+  button a:hover {
+    text-decoration: none;
+  }
