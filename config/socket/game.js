@@ -1,8 +1,9 @@
 import async from 'async';
 import underscore from 'underscore';
+/* eslint-disable import/no-dynamic-require */
 
-const questions = require(`${__dirname  }/../../app/controllers/questions.js`);
-const answers = require(`${__dirname  }/../../app/controllers/answers.js`);
+const questions = require(`${__dirname}/../../app/controllers/questions.js`);
+const answers = require(`${__dirname}/../../app/controllers/answers.js`);
 const guestNames = [
   'Disco Potato',
   'Silver Blister',
@@ -38,7 +39,7 @@ class Game {
     this.winnerAutopicked = false;
     this.czar = -1;
     this.playerMinLimit = 3;
-    this.playerMaxLimit = 6;
+    this.playerMaxLimit = 12;
     this.pointLimit = 5;
     this.state = 'awaiting players';
     this.round = 0;

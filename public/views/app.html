@@ -1,4 +1,7 @@
+
+
 </script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <div id="app-container" ng-controller="GameController">
   <div id="menu-container">
     <div id="logo">
@@ -31,3 +34,45 @@
     <answers></answers>
   </div>
 </div>
+<div ng-controller="InviteUserController">
+            <div id="invite-players-modal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                 <div class="modal-content">
+                    <div class="modal-header" style = "background-color:#090538;color:white;">
+                      <h4 class="modal-title" style="display:inline-block;">Invite Players</h4>
+                      <button type="button"  class="close btn-danger"  style="display:inline-block;" data-dismiss="modal" style ="color:white !important;">Close</button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="search-box">
+                        <div class="row">
+                          <p ng-show = "">{{notFound}}</p>
+                          <div class="col-md-8">
+                              <input ng-model="username" ng-focus="onElementFocus()"  placeholder="Player's Username">
+                              <p ng-show="userNotFound" style="color:red" id="userNotFound"> User not found </p>
+                         </div>
+                         <div class="col-md-4">
+                              <a class="btn btn-responsive btn-block" style = "color:white; background-color:#F05F40;" ng-click="searchUser()" id="name">Search</a>
+                          </div>
+                        </div>
+                        <div id ="searchControl">
+                          <div class="row" >
+                            <div class="col-md-12">
+                                <p ng-show='resultFound'  id="searchResult">{{searchResult}}</p>
+                            </div>
+                          </div>
+                          <div class="row invite-btn-row">
+                              <div class="col-md-12">
+                                  <button class="btn btn-block" style ="background-color:#090538; color:white;"  ng-click="inviteUsers(email)" data-dismiss="modal" id="inviteUserButton">Invite</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            
+               </div>
+              </div>
+        </div>
+  </div>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
