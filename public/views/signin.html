@@ -1,71 +1,89 @@
-<div id="main-bod" ng-controller="IndexController">
-  <!-- Fixed Logo & Menu Bar Start -->
-  <div id="top-part">
-    <div class="wpb-top-bar">
-      <div class="mod-contain" id="navver">
-        <div class="row">
-          <!-- Logo -->
-          <div class="wpb-logo-container">
-            <div id="landing-logo"> 
-              <span id="first-word">Cards</span>
-              <span id="second-word"> for</span> 
-              <span id="third-word">Humanity</span> 
-            </div> 
-            <div class="col-md-9 wpb-menu-container">
-              <ul class="wpb-main-menu">
-                <li><a href="/">Home</a></li>
-              </ul>
-            </div>
-          </div>      
-        </div>
-      </div>
-    </div>
-  </div>
-<!-- Fixed Logo & Menu Bar End -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Landing Start -->
-<div class="wpb-teaser parallax-background" id="homer">
-  <div class="background-opacity"></div> 
-  <div class="modified-container">
-    <div class="row" id="main-text"> 
-    <!-- Teaser Text Start -->
-    <div id="landing-logo">
-      <h2 id="slogan">Sign in with:</h2>
-      <div id="login-buttons">
-        <a href="/auth/facebook"><img class="login-item" src="/img/icons/facebook.png"></a>
-        <a href="/auth/github"><img class="login-item" src="/img/icons/github.png"></a>
-        <a href="/auth/twitter"><img class="login-item" src="/img/icons/twitter.png"></a>
-        <a href="/auth/google"><img class="login-item" src="/img/icons/google.png"></a>
-      </div>
-      <p id="create">Or log in below:</p>
+<!-- Latest compiled and minified CSS -->
 
-      <div class="sign-body">
-        <div class="more-sign">
-          <div class="sign-error" ng-show="showError() === 'invalid'">
-            Please check your username/password and try again.
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Advent+Pro|Berkshire+Swash|VT323">    
+ <link rel="stylesheet" type="text/css" href="../css/index.css">
+ <link rel="stylesheet" href="../css/styles.css">
+ <link rel="stylesheet" href="../css/login-style.css">
+ <title>Cards for humanity&nbsp|&nbspLogin</title>
+  </head>
+  <body>
+      <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+          <div class="container-fluid">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                      <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                  </button>
+                  <a class="navbar-brand page-scroll" href="#!" style="color: red;">CARDS FOR HUMANITY</a>
+              </div>
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-right">
+                       <li>
+                          <a class="page-scroll" href="#!">HOME</a>
+                      </li>
+                      <li>
+                          <a class="page-scroll" href="#!/signup">SIGN UP</a>
+                      </li>
+                  </ul>
+              </div>
+              <!-- /.navbar-collapse -->
           </div>
-          <form class="signup form-horizontal" ng-controller="AuthenticationController">
-            <div class="control-group">
-              <label for="email" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="email" type="text" name="email" placeholder="Email" ng-model="user.email" required novalidate />
+          <!-- /.container-fluid -->
+      </nav>
+      
+      <section id="main-banner">
+        <div>
+          <div class="wrapper">
+            <div class="container">
+            <h1>SIGN IN</h1>
+            
+            <form class="form" ng-controller="AuthenticationController">
+                <div class="control-group">
+                    <label for="email" class="control-label"></label>
+                    <div class="controls">
+                        <input type="text" placeholder="Email" ng-model="user.email">
+                    </div>
+                </div>
+                <p ng-show="validationErrorExists()" class="error-alert">{{ validationErrorMessage[0] }}</p>
+              <div class="control-group">
+                  <label for="password" class="control-label"></label>
+                  <div class="controls">
+                    <input type="password" placeholder="Password" ng-model="user.password">
+                  </div>
               </div>
-            </div>
-            <div class="control-group">
-              <label for="password" class="control-label"></label>
-              <div class="controls">
-                <input class="input-info" id="password" type="password" name="password" placeholder="Password" ng-model="user.password" required novalidate />
+              <p ng-show="validationErrorExists()" class="error-alert">{{ validationErrorMessage[1] }}</p>
+              <div>
+                <button type="submit" id="login-button" ng-click="login()">SIGN IN</button>
               </div>
-            </div>
-            <div class="form-actions top-margin">
-              <button id="sign-up-btn-other" type='submit' ng-click="login()">Sign In</button>
-            </div>
-          </form>
+            </form>
+          </div>
+          <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
         </div>
-      </div>
-    </div>
-    </div>
-    </div>
-  </div>
-</div>
-
+        </div>
+        <footer class="footer fixed-bottom">
+          <p class="text-center">&copy 2018 CARDS FOR HUMANITY Inc</p>
+        </footer>
+      </section>
+    </body>
+  </html>

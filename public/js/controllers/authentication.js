@@ -4,11 +4,11 @@ angular.module('mean.system')
     ['$scope', '$http', '$location', '$window',
       ($scope, $http, $location, $window) => {
         $scope.user = {};
-
+        $scope.validationErrorMessage = [];
+        $scope.validationErrorExists = () =>
+          $scope.validationErrorMessage.length > 0;
         $scope.serverErrorMessage = '';
-
         $scope.serverErrorExists = () => $scope.serverErrorMessage.length > 0;
-
         $scope.signup = () => {
           const registeredUser = {
             name: $scope.user.name,
@@ -22,8 +22,10 @@ angular.module('mean.system')
               $location.path('/');
               $window.location.reload();
             }, (error) => {
-              const { data: { message } } = error;
-              $scope.serverErrorMessage = message;
+              const { data: { name, email, password } } = error;
+              $scope.validationErrorMessage.push(name);
+              $scope.validationErrorMessage.push(email);
+              $scope.validationErrorMessage.push(password);
             });
         };
         $scope.login = () => {
@@ -36,12 +38,12 @@ angular.module('mean.system')
               const { data: { userDetails } } = res,
                 { token } = userDetails;
               $window.localStorage.setItem('token', token);
-              console.log(`${token} because I am logged in`)
               $location.path('/');
               $window.location.reload();
             }, (error) => {
-              const { data: { message } } = error;
-              $scope.serverErrorMessage = message;
+              const { data: { email, password } } = error;
+              $scope.validationErrorMessage.push(email);
+              $scope.validationErrorMessage.push(password);
             });
         };
       }]
