@@ -1,0 +1,268 @@
+#main-banner {
+  background-image:linear-gradient(to bottom, rgba(8, 5, 56, 0.68), rgba(8, 5, 56, 0.68)), url(../img/icons/jumbo1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  
+ 
+  display: block;
+  width:auto;
+  height:100%;
+  min-height: 100%;
+  min-width: 100%;
+  /* top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; */
+  
+
+}
+.game-screen {
+  margin-bottom: 30px;
+}
+body {
+  font-family: 'Advent Pro';
+  color: white;
+}
+.card-content > div > h1 {
+  letter-spacing: 5px;
+  font-weight: 900;
+}
+#player-count > h2 {
+  letter-spacing: 5px;
+  font-weight: 900;
+}
+#player-count > p  {
+  letter-spacing: 5px;
+  font-weight: 900;
+}
+button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  outline: 0;
+  background-color: white;
+  border: 0;
+  padding: 10px 15px;
+  color: #150366;
+  border-radius: 3px;
+  width: 250px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-transition-duration: 0.25s;
+          transition-duration: 0.25s;
+}
+button:hover {
+  background-color: #391c5f;
+  color: white;
+  font-weight: bold;
+  font-size: 23px;
+}
+
+li{
+  font-size: 25px;
+}
+.timer {
+  /* border: 2px solid orange; */
+  box-shadow: none !important;
+  background-color: rgba(255, 255, 255, 0.226) !important;
+}
+
+.card {
+  margin-bottom: 0px !important;
+  background-color: rgba(255, 255, 255, 0.226);
+}
+.card .card-content  {
+  border-radius: 0 0 2px 2px;
+  border: 1px solid rgba(255, 255, 255, 0.226);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.226);
+}
+.info-container {
+  border: 1px solid rgba(255, 255, 255, 0.226);
+  border-radius: 0 0 2px 2px;
+  background-color: rgba(255, 255, 255, 0.226)
+}
+#how-to-play{
+  letter-spacing: 5px;
+  font-weight: 900;
+}
+.card-content-2 {
+  background-color: #381c5fbb;
+  margin-top: 10px;
+}
+#donate-now {
+  
+  font-weight: 900;
+}
+
+.center, .center-align {
+  text-align: center;
+}
+.fixed-height-230 {
+  height: 230px;
+  overflow: scroll !important;
+}
+.card {
+  position: relative;
+  margin: .5rem 0 1rem 0;
+  background-color: rgba(255, 255, 255, 0.226);
+  -webkit-transition: -webkit-box-shadow .25s;
+  transition: -webkit-box-shadow .25s;
+  transition: box-shadow .25s;
+  transition: box-shadow .25s, -webkit-box-shadow .25s;
+  border-radius: 2px;
+}
+.countdown-timer {
+  font-size: 180px;
+  color: #fff;
+  margin: 0px;
+  font-family: VT323;
+  padding: 5px;
+  
+}
+.cfh-header {
+  background-color: rgba(255, 255, 255, 0.274);
+}
+.div-1-timer{
+  
+  
+  background-color: rgba(255, 255, 255, 0.226);
+  border-radius: 5px;
+  padding:10px;
+}
+.div-1-background-inner {
+  width:auto;
+  height:auto;
+  
+  background-color: rgba(255, 255, 255, 0.226);
+  border-radius: 5px;
+  
+
+}
+
+.div-1-background-inner > h1 {
+  font-size: 150px;
+}
+.game-screen {
+  margin-top: 50px;
+}
+.game-header {
+  margin: 0px
+}
+.navbar-default {
+  background-color: white;
+  border-color: rgba(34, 34, 34, 0.05);
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-transition: all 0.35s;
+  -moz-transition: all 0.35s;
+  transition: all 0.35s;
+}
+.navbar-default .navbar-header .navbar-brand {
+  color: #F05F40;
+  font-family: 'Advent Pro', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.navbar-default .navbar-header .navbar-brand:hover,
+.navbar-default .navbar-header .navbar-brand:focus {
+  color: #eb3812;
+  font-weight: bold;
+}
+
+
+.navbar-default .navbar-header .navbar-toggle {
+  font-weight: 700;
+  font-size: 23px;
+  color: #F05F40;
+  text-transform: uppercase;
+}
+
+
+.navbar-default .nav > li > a,
+.navbar-default .nav > li > a:focus {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 18px;
+  color:#150366;
+  font-family: 'Advent Pro', cursive;
+} 
+
+.navbar-default .nav > li > a:hover,
+.navbar-default .nav > li > a:focus:hover {
+  color: #150366;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.navbar-default .nav > li.active > a,
+.navbar-default .nav > li.active > a:focus {
+  color: #150366 !important;
+  background-color: transparent;
+}
+
+.navbar-default .nav > li.active > a:hover,
+.navbar-default .nav > li.active > a:focus:hover {
+  background-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .navbar-default {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  .navbar-default .navbar-header .navbar-brand {
+    color: #eb3812;
+    font-size: 23px;
+  }
+
+  .navbar-default .navbar-header .navbar-brand:hover,
+  .navbar-default .navbar-header .navbar-brand:focus {
+    color: #eb3812;
+    font-size: 25px;
+    font-weight: bold;
+  }
+  
+  .navbar-default .nav > li > a,
+  .navbar-default .nav > li > a:focus {
+    color: #150366;
+    font-size:18px;
+  }
+  
+  .navbar-default .nav > li > a:hover,
+  .navbar-default .nav > li > a:focus:hover {
+    color: #150366;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .navbar-default.affix {
+    background-color: white;
+    border-color: #F05F40;
+  }
+
+  .navbar-default.affix .navbar-header .navbar-brand {
+    color: #F05F40;
+    font-size: 23px;
+  }
+
+  .navbar-default.affix .navbar-header .navbar-brand:hover,
+  .navbar-default.affix .navbar-header .navbar-brand:focus {
+    color: #eb3812;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  .navbar-default.affix .nav > li > a,
+  .navbar-default.affix .nav > li > a:focus {
+    color: #150366;
+  }
+
+  .navbar-default.affix .nav > li > a:hover,
+  .navbar-default.affix .nav > li > a:focus:hover {
+    color: #150366;
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
