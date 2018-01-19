@@ -1,14 +1,12 @@
-<div class="card timer div-1-timer fixed-height-230">
+<div class="cards timer div-1-timer fixed-height-230">
   <div class="card-content center-align">
     <h1 class="countdown-timer" ng-bind="game.time"></h1>
     <p>
-      <span ng-show="game.state == 'awaiting players'">       
-            <a href="#!/tour" class="btn">Take a tour</a>
-      </span>
-    <span id="timer-status-round" ng-hide="game.state === 'winner has been chosen' || game.state === 'waiting for czar to decide'"> Time Remaining</span>
-    <span id="timer-status-czar-choosing" ng-show="game.state === 'winner has been chosen'"> Next Round In</span>
-    <span id="timer-status-czar-choosing" ng-show="game.state === 'waiting for czar to decide'"> Czar Choosing</span>
-    </br>
+      <span id="timer-status-round" class="timer-message" ng-hide="game.state === 'winner has been chosen' || game.state === 'waiting for czar to decide'">
+      Time Remaining</span>
+      <span id="timer-status-czar-choosing" class="timer-message" ng-show="game.state === 'winner has been chosen'"> Next Round In</span>
+      <span id="timer-status-czar-choosing" class="timer-message" ng-show="game.state === 'waiting for czar to decide'"> Czar Choosing</span>
+      </br>
     </p>
   </div>
 </div>

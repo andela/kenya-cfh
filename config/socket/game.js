@@ -1,8 +1,9 @@
 import async from 'async';
 import underscore from 'underscore';
-
-const questions = require(`${__dirname  }/../../app/controllers/questions.js`);
-const answers = require(`${__dirname  }/../../app/controllers/answers.js`);
+//  eslint-disable-next-line import/no-dynamic-require
+const questions = require(`${__dirname}/../../app/controllers/questions.js`);
+//  eslint-disable-next-line import/no-dynamic-require
+const answers = require(`${__dirname}/../../app/controllers/answers.js`);
 const guestNames = [
   'Disco Potato',
   'Silver Blister',
@@ -38,7 +39,7 @@ class Game {
     this.winnerAutopicked = false;
     this.czar = -1;
     this.playerMinLimit = 3;
-    this.playerMaxLimit = 6;
+    this.playerMaxLimit = 12;
     this.pointLimit = 5;
     this.state = 'awaiting players';
     this.round = 0;
@@ -93,10 +94,9 @@ class Game {
    * @param {string} message
    */
   sendNotification(message) {
-    this.io.sockets.in(this.gameID).emit(
-      'notification',
-      { notification: message }
-    );
+    this.io.sockets
+      .in(this.gameID)
+      .emit('notification', { notification: message });
   }
 
   /**
@@ -118,7 +118,7 @@ class Game {
     this.players.forEach((player) => {
       if (player.username === 'Guest') {
         const randIndex = Math.floor(Math.random() * self.guestNames.length);
-        player.username = self.guestNames.splice(randIndex, 1)[0];
+        [player.username] = self.guestNames.splice(randIndex, 1);
         if (!self.guestNames.length) {
           self.guestNames = guestNames.slice();
         }
@@ -132,29 +132,20 @@ class Game {
   prepareGame() {
     this.state = 'game in progress';
 
-    this.io.sockets.in(this.gameID).emit(
-      'prepareGame',
-      {
-        playerMinLimit: this.playerMinLimit,
-        playerMaxLimit: this.playerMaxLimit,
-        pointLimit: this.pointLimit,
-        timeLimits: this.timeLimits
-      }
-    );
+    this.io.sockets.in(this.gameID).emit('prepareGame', {
+      playerMinLimit: this.playerMinLimit,
+      playerMaxLimit: this.playerMaxLimit,
+      pointLimit: this.pointLimit,
+      timeLimits: this.timeLimits
+    });
 
     const self = this;
-    async.parallel(
-      [
-        this.getQuestions,
-        this.getAnswers
-      ],
-      (err, results) => {
-        self.questions = results[0];
-        self.answers = results[1];
+    async.parallel([this.getQuestions, this.getAnswers], (err, results) => {
+      [self.questions] = results;
+      [, self.answers] = results;
 
-        self.startGame();
-      }
-    );
+      self.startGame();
+    });
   }
 
   /**
@@ -246,7 +237,7 @@ class Game {
       if (player.points >= self.pointLimit) {
         winner = index;
       }
-    })
+    });
 
     self.sendUpdate();
     self.resultsTimeout = setTimeout(() => {
@@ -283,19 +274,19 @@ class Game {
    * @returns {void} getQuestions
    */
   getQuestions(callback) {
-    questions.allQuestionsForGame((questions) => {
-      callback(null, questions);
+    questions.allQuestionsForGame((allQuestions) => {
+      callback(null, allQuestions);
     });
   }
 
   /**
-   * 
+   *
    * @param {function} callback
    * @returns {void} getAnswers
    */
   getAnswers(callback) {
-    answers.allAnswersForGame((answers) => {
-      callback(null, answers);
+    answers.allAnswersForGame((allAnswers) => {
+      callback(null, allAnswers);
     });
   }
 
@@ -310,7 +301,7 @@ class Game {
     let randomNumber;
 
     while (shuffleIndex) {
-      randomNumber = Math.floor(Math.random() * shuffleIndex--);
+      randomNumber = Math.floor(Math.random() * (shuffleIndex -= 1));
       temp = cards[randomNumber];
       cards[randomNumber] = cards[shuffleIndex];
       cards[shuffleIndex] = temp;
@@ -362,10 +353,10 @@ class Game {
    */
   pickCards(cardArray, player) {
     if (this.state === 'waiting for players to pick') {
-      let playerIndex = this.findPlayerIndexBySocket(player);
+      const playerIndex = this.findPlayerIndexBySocket(player);
       if (playerIndex !== -1) {
         let previouslySubmitted = false;
-        underscore.each(this.table, (pickedSet, index) => {
+        underscore.each(this.table, (pickedSet) => {
           if (pickedSet.player === player) {
             previouslySubmitted = true;
           }
@@ -375,14 +366,16 @@ class Game {
           cardArray.map((card, index) => {
             let cardIndex = null;
 
-            this.players[playerIndex].hand.map((thePlayerHand, thePlayerHandIndex) => {
-              if (thePlayerHand.id === cardArray[index]) {
-                cardIndex = thePlayerHandIndex;
-              }
-            });
+            this.players[playerIndex]
+              .hand.map((thePlayerHand, thePlayerHandIndex) => {
+                if (thePlayerHand.id === cardArray[index]) {
+                  cardIndex = thePlayerHandIndex;
+                }
+              });
 
             if (cardIndex !== null) {
-              tableCard.push(this.players[playerIndex].hand.splice(cardIndex, 1)[0]);
+              tableCard.push(this.players[playerIndex]
+                .hand.splice(cardIndex, 1)[0]);
             }
           });
 
@@ -442,12 +435,12 @@ class Game {
       if (this.czar === playerIndex) {
         if (this.state === 'waiting for players to pick') {
           clearTimeout(this.choosingTimeout);
-          this.sendNotification('The Czar left the game!' +
-          'Starting a new round.');
+          this
+            .sendNotification('The Czar left the game! Starting a new round.');
           return this.stateChoosing(this);
         } else if (this.state === 'waiting for czar to decide') {
-          this.sendNotification('The Czar left the game! ' +
-           'First answer submitted wins!');
+          this
+            .sendNotification('The Czar left the game! First submit wins!');
           this.pickWinning(this.table[0].card[0].id, thePlayer, true);
         }
       } else {
@@ -470,8 +463,10 @@ class Game {
   pickWinning(card, player, autopicked) {
     autopicked = autopicked || false;
     const playerIndex = this.findPlayerIndexBySocket(player);
-    if ((playerIndex === this.czar || autopicked) 
-    && this.state === 'waiting for czar to decide') {
+    if (
+      (playerIndex === this.czar || autopicked) &&
+      this.state === 'waiting for czar to decide'
+    ) {
       let cardIndex = -1;
       underscore.each(this.table, (winningSet, index) => {
         if (winningSet.card[0].id === card) {
@@ -481,7 +476,8 @@ class Game {
 
       if (cardIndex !== -1) {
         this.winningCard = cardIndex;
-        const winnerIndex = this.findPlayerIndexBySocket(this.table[cardIndex].player);
+        const winnerIndex =
+          this.findPlayerIndexBySocket(this.table[cardIndex].player);
         this.sendNotification(`${this.players[winnerIndex].username} 
         has won the round!`);
 
@@ -536,4 +532,3 @@ class Game {
 }
 
 export default Game;
-
