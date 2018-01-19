@@ -1,21 +1,21 @@
-import async from 'async';
-import underscore from 'underscore';
+import async from "async";
+import underscore from "underscore";
 
-const questions = require(`${__dirname  }/../../app/controllers/questions.js`);
-const answers = require(`${__dirname  }/../../app/controllers/answers.js`);
+const questions = require(`${__dirname}/../../app/controllers/questions.js`);
+const answers = require(`${__dirname}/../../app/controllers/answers.js`);
 const guestNames = [
-  'Disco Potato',
-  'Silver Blister',
-  'Insulated Mustard',
-  'Funeral Flapjack',
-  'Toenail',
-  'Urgent Drip',
-  'Raging Bagel',
-  'Aggressive Pie',
-  'Loving Spoon',
-  'Swollen Node',
-  'The Spleen',
-  'Dingle Dangle'
+  "Disco Potato",
+  "Silver Blister",
+  "Insulated Mustard",
+  "Funeral Flapjack",
+  "Toenail",
+  "Urgent Drip",
+  "Raging Bagel",
+  "Aggressive Pie",
+  "Loving Spoon",
+  "Swollen Node",
+  "The Spleen",
+  "Dingle Dangle"
 ];
 
 /**
@@ -38,9 +38,9 @@ class Game {
     this.winnerAutopicked = false;
     this.czar = -1;
     this.playerMinLimit = 3;
-    this.playerMaxLimit = 6;
+    this.playerMaxLimit = 12;
     this.pointLimit = 5;
-    this.state = 'awaiting players';
+    this.state = "awaiting players";
     this.round = 0;
     this.questions = null;
     this.answers = null;
@@ -61,7 +61,7 @@ class Game {
    */
   payload() {
     const players = [];
-    this.players.forEach((player) => {
+    this.players.forEach(player => {
       players.push({
         hand: player.hand,
         points: player.points,
@@ -93,10 +93,9 @@ class Game {
    * @param {string} message
    */
   sendNotification(message) {
-    this.io.sockets.in(this.gameID).emit(
-      'notification',
-      { notification: message }
-    );
+    this.io.sockets
+      .in(this.gameID)
+      .emit("notification", { notification: message });
   }
 
   /**
@@ -115,8 +114,8 @@ class Game {
    */
   assignGuestNames() {
     const self = this;
-    this.players.forEach((player) => {
-      if (player.username === 'Guest') {
+    this.players.forEach(player => {
+      if (player.username === "Guest") {
         const randIndex = Math.floor(Math.random() * self.guestNames.length);
         player.username = self.guestNames.splice(randIndex, 1)[0];
         if (!self.guestNames.length) {
@@ -130,31 +129,22 @@ class Game {
    * @returns {void} prepareGame
    */
   prepareGame() {
-    this.state = 'game in progress';
+    this.state = "game in progress";
 
-    this.io.sockets.in(this.gameID).emit(
-      'prepareGame',
-      {
-        playerMinLimit: this.playerMinLimit,
-        playerMaxLimit: this.playerMaxLimit,
-        pointLimit: this.pointLimit,
-        timeLimits: this.timeLimits
-      }
-    );
+    this.io.sockets.in(this.gameID).emit("prepareGame", {
+      playerMinLimit: this.playerMinLimit,
+      playerMaxLimit: this.playerMaxLimit,
+      pointLimit: this.pointLimit,
+      timeLimits: this.timeLimits
+    });
 
     const self = this;
-    async.parallel(
-      [
-        this.getQuestions,
-        this.getAnswers
-      ],
-      (err, results) => {
-        self.questions = results[0];
-        self.answers = results[1];
+    async.parallel([this.getQuestions, this.getAnswers], (err, results) => {
+      self.questions = results[0];
+      self.answers = results[1];
 
-        self.startGame();
-      }
-    );
+      self.startGame();
+    });
   }
 
   /**
@@ -171,7 +161,7 @@ class Game {
    * @returns {void} sendUpdate
    */
   sendUpdate() {
-    this.io.sockets.in(this.gameID).emit('gameUpdate', this.payload());
+    this.io.sockets.in(this.gameID).emit("gameUpdate", this.payload());
   }
 
   /**
@@ -179,7 +169,7 @@ class Game {
    * @returns {void} stateChoosing
    */
   stateChoosing(self) {
-    self.state = 'waiting for players to pick';
+    self.state = "waiting for players to pick";
     self.table = [];
     self.winningCard = -1;
     self.winningCardPlayer = -1;
@@ -221,7 +211,7 @@ class Game {
    * @returns {void} stateJudging
    */
   stateJudging(self) {
-    self.state = 'waiting for czar to decide';
+    self.state = "waiting for czar to decide";
 
     if (self.table.length <= 1) {
       self.selectFirst();
@@ -239,14 +229,14 @@ class Game {
    * @returns {void} stateResults
    */
   stateResults(self) {
-    self.state = 'winner has been chosen';
+    self.state = "winner has been chosen";
     let winner = -1;
 
     self.players.map((player, index) => {
       if (player.points >= self.pointLimit) {
         winner = index;
       }
-    })
+    });
 
     self.sendUpdate();
     self.resultsTimeout = setTimeout(() => {
@@ -264,7 +254,7 @@ class Game {
    * @returns {void} stateEndGame
    */
   stateEndGame(winner) {
-    this.state = 'game ended';
+    this.state = "game ended";
     this.gameWinner = winner;
     this.sendUpdate();
   }
@@ -273,7 +263,7 @@ class Game {
    * @returns {void} stateDissolveGame
    */
   stateDissolveGame() {
-    this.state = 'game dissolved';
+    this.state = "game dissolved";
     this.sendUpdate();
   }
 
@@ -283,18 +273,18 @@ class Game {
    * @returns {void} getQuestions
    */
   getQuestions(callback) {
-    questions.allQuestionsForGame((questions) => {
+    questions.allQuestionsForGame(questions => {
       callback(null, questions);
     });
   }
 
   /**
-   * 
+   *
    * @param {function} callback
    * @returns {void} getAnswers
    */
   getAnswers(callback) {
-    answers.allAnswersForGame((answers) => {
+    answers.allAnswersForGame(answers => {
       callback(null, answers);
     });
   }
@@ -329,7 +319,7 @@ class Game {
       this.answers = data;
     };
 
-    this.players.map((player) => {
+    this.players.map(player => {
       while (player.hand.length < maxAnswers) {
         player.hand.push(this.answers.pop());
         if (!this.answers.length) {
@@ -361,7 +351,7 @@ class Game {
    * @returns {void} pickCards
    */
   pickCards(cardArray, player) {
-    if (this.state === 'waiting for players to pick') {
+    if (this.state === "waiting for players to pick") {
       let playerIndex = this.findPlayerIndexBySocket(player);
       if (playerIndex !== -1) {
         let previouslySubmitted = false;
@@ -375,14 +365,18 @@ class Game {
           cardArray.map((card, index) => {
             let cardIndex = null;
 
-            this.players[playerIndex].hand.map((thePlayerHand, thePlayerHandIndex) => {
-              if (thePlayerHand.id === cardArray[index]) {
-                cardIndex = thePlayerHandIndex;
+            this.players[playerIndex].hand.map(
+              (thePlayerHand, thePlayerHandIndex) => {
+                if (thePlayerHand.id === cardArray[index]) {
+                  cardIndex = thePlayerHandIndex;
+                }
               }
-            });
+            );
 
             if (cardIndex !== null) {
-              tableCard.push(this.players[playerIndex].hand.splice(cardIndex, 1)[0]);
+              tableCard.push(
+                this.players[playerIndex].hand.splice(cardIndex, 1)[0]
+              );
             }
           });
 
@@ -435,19 +429,21 @@ class Game {
 
       this.players.splice(playerIndex, 1);
 
-      if (this.state === 'awaiting players') {
+      if (this.state === "awaiting players") {
         this.assignPlayerColors();
       }
 
       if (this.czar === playerIndex) {
-        if (this.state === 'waiting for players to pick') {
+        if (this.state === "waiting for players to pick") {
           clearTimeout(this.choosingTimeout);
-          this.sendNotification('The Czar left the game!' +
-          'Starting a new round.');
+          this.sendNotification(
+            "The Czar left the game!" + "Starting a new round."
+          );
           return this.stateChoosing(this);
-        } else if (this.state === 'waiting for czar to decide') {
-          this.sendNotification('The Czar left the game! ' +
-           'First answer submitted wins!');
+        } else if (this.state === "waiting for czar to decide") {
+          this.sendNotification(
+            "The Czar left the game! " + "First answer submitted wins!"
+          );
           this.pickWinning(this.table[0].card[0].id, thePlayer, true);
         }
       } else {
@@ -470,8 +466,10 @@ class Game {
   pickWinning(card, player, autopicked) {
     autopicked = autopicked || false;
     const playerIndex = this.findPlayerIndexBySocket(player);
-    if ((playerIndex === this.czar || autopicked) 
-    && this.state === 'waiting for czar to decide') {
+    if (
+      (playerIndex === this.czar || autopicked) &&
+      this.state === "waiting for czar to decide"
+    ) {
       let cardIndex = -1;
       underscore.each(this.table, (winningSet, index) => {
         if (winningSet.card[0].id === card) {
@@ -481,7 +479,9 @@ class Game {
 
       if (cardIndex !== -1) {
         this.winningCard = cardIndex;
-        const winnerIndex = this.findPlayerIndexBySocket(this.table[cardIndex].player);
+        const winnerIndex = this.findPlayerIndexBySocket(
+          this.table[cardIndex].player
+        );
         this.sendNotification(`${this.players[winnerIndex].username} 
         has won the round!`);
 
@@ -511,7 +511,7 @@ class Game {
    * @returns {void} newCzar
    */
   newCzar(self) {
-    self.state = 'czar pick card';
+    self.state = "czar pick card";
     self.table = [];
     if (self.czar >= self.players.length - 1) {
       self.czar = 0;
@@ -527,13 +527,12 @@ class Game {
    * @returns {void} startNextGameRound
    */
   startNextGameRound(self) {
-    if (self.state === 'czar pick card') {
+    if (self.state === "czar pick card") {
       self.stateChoosing(self);
-    } else if (self.state === 'czar left game') {
+    } else if (self.state === "czar left game") {
       self.newCzar(self);
     }
   }
 }
 
 export default Game;
-

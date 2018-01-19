@@ -15,26 +15,30 @@
 
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+        rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic'
+        rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=VT323' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Berkshire Swash' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
 
     <!-- Theme CSS -->
-   <link href="css/cfh.min.css" rel="stylesheet">
+    <link href="css/cfh.min.css" rel="stylesheet">
 
 
 </head>
 
 <body id="page-top">
 
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top" ng-controller="IndexController">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    <span class="sr-only">Toggle navigation</span> Menu
+                    <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand page-scroll" href="#page-top">Cards for humanity</a>
             </div>
@@ -42,21 +46,24 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                     <li>
+                    <li>
                         <a class="page-scroll" href="#about">ABOUT GAME</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#howtoplay">HOW TO PLAY</a>
                     </li>
                     <li>
-                        <a class="page-scroll"
-                        href="#donate" >DONATE TO CHARITY</a>
+                        <a class="page-scroll" href="#donate">DONATE TO CHARITY</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#team">MEET THE TEAM</a>
                     </li>
-                    <li>
+
+                    <li ng-show="showOptions">
                         <a class="page-scroll" href="/#!/signin">SIGN IN</a>
+                    </li>
+                    <li ng-hide="showOptions">
+                        <a href="" ng-click="signOut()">SIGN OUT</a>
                     </li>
                 </ul>
             </div>
@@ -66,19 +73,31 @@
     </nav>
 
     <header>
-        <div class="header-content">
+        <div class="header-content" ng-controller="IndexController">
             <div class="header-content-inner">
-<img style="display: inline;" src="img/Cards%20for%20Humanity-08.png" width="200" alt="logo" />
+                <img style="display: inline;" src="img/Cards%20for%20Humanity-08.png" width="200" alt="logo" />
                 <h1>Cards For Humanity</h1>
                 <hr>
                 <p>A GAME FOR HORIBBLE PEOPLE DESPERATELY TRYING TO DO GOOD.</p>
-                
-            <div class="text-center">
-                                               <button type="submit" id="login-button" ng-click="login()"> <a href="/#!/signup" >SIGN UP</a></button>
-                
-<button type="submit" id="login-button" ng-click="login()"> <a href="/play" >PLAY AS GUEST</a></button>
 
-                </div> 
+                <div class="text-center">
+
+                    <button type="submit" id="login-button" ng-show="showOptions" ng-click="login()">
+                        <a href="/#!/signup">SIGN UP</a>
+                    </button>
+
+                    <button type="submit" id="login-button" ng-show="showOptions" ng-click="login()">
+                        <a href="/play">PLAY AS GUEST</a>
+                    </button>
+
+                    <button class="play-with" type="submit" id="sign-up-btn-landing" ng-hide="showOptions">
+                        <a href="/play">PLAY WITH FRIENDS</a>
+                    </button>
+                    <button class="play-with" type="submit" id="sign-up-btn-landing" ng-hide="showOptions">
+                        <a href="/play">PLAY WITH OTHERS</a>
+                    </button>
+
+                </div>
             </div>
         </div>
     </header>
@@ -89,10 +108,15 @@
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">What is Cards for Humanity</h2>
                     <hr class="light">
-                    <h3 class="text-faded">Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that gives you the opportunity to donate to children in need - all while remaining as despicable and awkward as you naturally are.</h3>
-        <div class="text-center">
-                                   <button type="submit" id="login-button" ng-click="login()"> <a href="/play" >PLAY NOW</a></button><br>
-        </div> 
+                    <h3 class="text-faded">Cards for Humanity is a fast-paced online version of the popular card game, Cards Against Humanity, that
+                        gives you the opportunity to donate to children in need - all while remaining as despicable and awkward
+                        as you naturally are.</h3>
+                    <div class="text-center">
+                        <button type="submit" id="login-button" ng-click="login()">
+                            <a href="/play">PLAY NOW</a>
+                        </button>
+                        <br>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,33 +161,43 @@
         </div>
 
     </section>
-        <section class="bg-primary" id="donate" >
-            <div class="container ">
-                    <div class="row ">
+    <section class="bg-primary" id="donate">
+        <div class="container ">
+            <div class="row ">
                 <h2 class="charity-h2 text-center">DONATE TO CHARITY</h2>
                 <hr class="primary">
-              <div class="col-md-7">
-                <p class="lead text-center">"If you don't give back, no one will like you™" - <a  href="https://www.crowdrise.com/cfhio/fundraiser/cards4humanity">crowdrise.com</a></p>
-                <p class="lead text-center">We're quite sure you feel the same way, so we've integrated donation widgets (via <a href="https://www.crowdrise.com/cfhio/fundraiser/cards4humanity">crowdrise.com</a>), along with some not-so-subtle reminders throughout the game to give you the opportunity to donate. If you're signed in when you donate, we'll even upgrade your account and place a crown on your avatar's head (to remind other players how much better you are than them).
-                    All donations go to the Make-a-Wish Foundation and benefit children in need.</p>
+                <div class="col-md-7">
+                    <p class="lead text-center">"If you don't give back, no one will like you™" -
+                        <a href="https://www.crowdrise.com/cfhio/fundraiser/cards4humanity">crowdrise.com</a>
+                    </p>
+                    <p class="lead text-center">We're quite sure you feel the same way, so we've integrated donation widgets (via
+                        <a href="https://www.crowdrise.com/cfhio/fundraiser/cards4humanity">crowdrise.com</a>), along with some not-so-subtle reminders throughout the game to give you the opportunity
+                        to donate. If you're signed in when you donate, we'll even upgrade your account and place a crown
+                        on your avatar's head (to remind other players how much better you are than them). All donations
+                        go to the Make-a-Wish Foundation and benefit children in need.</p>
 
-     
-                             <div class="text-center">
-                                   <button type="submit" id="login-button" ng-click="login()"> <a href="https://www.crowdrise.com/donate/project/cfhio/cards4humanity?widget=true&redirect_to=http%3A%2F%2Fcfh.io%2F%23!%2F&stylesheet=&amounts=" >DONATE NOW</a></button><br>
-                                 
-               
-    </div>  
-                  <br>
-              </div>
 
-              <div class="col-md-5">
-                <div class="embed-responsive embed-responsive-16by9">
-                  <iframe width="854" height="480" src="https://www.youtube.com/embed/0Mro-hWPZmI?list=PL6B908A6FD8E0C714" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
-              </div>
-              </div>
+                    <div class="text-center">
+                        <button type="submit" id="login-button" ng-click="login()">
+                            <a href="https://www.crowdrise.com/donate/project/cfhio/cards4humanity?widget=true&redirect_to=http%3A%2F%2Fcfh.io%2F%23!%2F&stylesheet=&amounts=">DONATE NOW</a>
+                        </button>
+                        <br>
+
+
+                    </div>
+                    <br>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="854" height="480" src="https://www.youtube.com/embed/0Mro-hWPZmI?list=PL6B908A6FD8E0C714" frameborder="0"
+                            gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
             </div>
-            </div>
+        </div>
     </section>
+
 
 
     <section id="team">
@@ -172,41 +206,48 @@
                 <h2>Meet the Team !</h2>
             </div>
         </div>
-<br>
+        <br>
         <div class="fluid text-center">
-      <div class="row text-center">
-        <div class="col-lg-3 col-md-6 text-center">
-          <img class="img-circle" src="img/P1260043-X3.jpg" alt="Generic placeholder image" width="50%" height="50%">
-          <h2>Ogidigbo Ejiro</h2>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-3 col-md-6 text-center">
-          <img class="img-circle " src="img/P1260083-X2.jpg" width="50%" height="50%">
-          <h2>Rachel Abaniwo</h2>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-3 col-md-6 text-center">
-          <img class="img-circle" src="img/P1260106-X2.jpg" alt="Generic placeholder image" width="50%" height="50%">
-          <h2>Kayode Ayelegun</h2>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-3 col-md-6 text-center">
-          <img class="img-circle" src="img/P1260105-X2.jpg" width="50%" height="50%">
-          <h2>Victor Adukwu</h2>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-3 col-md-6 text-center">
-          <img class="img-circle" src="img/P1260094-X2.jpg" alt="Generic placeholder image" width="50%" height="50%">
-          <h3>Taiwo Sanni</h3>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-3 col-md-6 text-center">
-          <img class="img-circle" src="img/P1260039-X2.jpg" alt="Generic placeholder image" width="50%" height="50%">
-          <h2>Ayobami Adelakun</h2>
-        </div><!-- /.col-lg-4 -->
-      </div><!-- /.row -->
+            <div class="row text-center">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <img class="img-circle" src="img/P1260043-X3.jpg" alt="Generic placeholder image" width="50%" height="50%">
+                    <h2>Ogidigbo Ejiro</h2>
+                </div>
+                <!-- /.col-lg-4 -->
+                <div class="col-lg-3 col-md-6 text-center">
+                    <img class="img-circle " src="img/P1260083-X2.jpg" width="50%" height="50%">
+                    <h2>Rachel Abaniwo</h2>
+                </div>
+                <!-- /.col-lg-4 -->
+                <div class="col-lg-3 col-md-6 text-center">
+                    <img class="img-circle" src="img/P1260106-X2.jpg" alt="Generic placeholder image" width="50%" height="50%">
+                    <h2>Kayode Ayelegun</h2>
+                </div>
+                <!-- /.col-lg-4 -->
+                <div class="col-lg-3 col-md-6 text-center">
+                    <img class="img-circle" src="img/P1260105-X2.jpg" width="50%" height="50%">
+                    <h2>Victor Adukwu</h2>
+                </div>
+                <!-- /.col-lg-4 -->
+                <div class="col-lg-3 col-md-6 text-center">
+                    <img class="img-circle" src="img/P1260094-X2.jpg" alt="Generic placeholder image" width="50%" height="50%">
+                    <h3>Taiwo Sanni</h3>
+                </div>
+                <!-- /.col-lg-4 -->
+                <div class="col-lg-3 col-md-6 text-center">
+                    <img class="img-circle" src="img/P1260039-X2.jpg" alt="Generic placeholder image" width="50%" height="50%">
+                    <h2>Ayobami Adelakun</h2>
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
         </div>
     </section>
-           <footer class="text-muted">
-          <div class="container">
+    <footer class="text-muted">
+        <div class="container">
             <p class="float-right">&copy; 2018 CARDS FOR HUMANITY Inc</p>
-          </div>
-        </footer>
+        </div>
+    </footer>
 
 
 
