@@ -2,14 +2,14 @@ html,
 body {
   width: 100%;
 }
-body>div{
-  height: 100%;    
+body > div {
+  height: 100%;
 }
 body {
-  font-family: 'Merriweather', 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Merriweather", "Helvetica Neue", Arial, sans-serif;
 }
 hr {
-  border-color: #F05F40;
+  border-color: #f05f40;
   border-width: 3px;
   max-width: 50px;
 }
@@ -20,17 +20,16 @@ a {
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   transition: all 0.35s;
-  color: #F05F40;
+  color: #f05f40;
 }
 
-h1
-{
-  font-family: 'Berkshire Swash', 'Helvetica Neue', Arial, sans-serif;
+h1 {
+  font-family: "Berkshire Swash", "Helvetica Neue", Arial, sans-serif;
 }
 
-a
-{
-  font-family: 'Advent Pro', 'Helvetica Neue', Arial, sans-serif;
+a {
+  font-family: "Advent Pro", "Helvetica Neue", Arial, sans-serif;
+  cursor: pointer;
 }
 p {
   font-size: 16px;
@@ -38,27 +37,27 @@ p {
   margin-bottom: 20px;
 }
 .bg-primary {
-  background-color: #F05F40;
+  background-color: #f05f40;
 }
 .text-faded {
   color: rgba(255, 255, 255, 0.7);
 }
 section {
   padding: 100px 0;
-    min-height:500px;
+  min-height: 500px;
 }
 
 .navbar-default {
   background-color: white;
   border-color: rgba(34, 34, 34, 0.05);
-  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   transition: all 0.35s;
 }
 .navbar-default .navbar-header .na vbar-brand {
-  color: #F05F40;
-  font-family: 'Advent Pro', 'Helvetica Neue', Arial, sans-serif;
+  color: #f05f40;
+  font-family: "Advent Pro", "Helvetica Neue", Arial, sans-serif;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -78,15 +77,17 @@ section {
   font-weight: 700;
   font-size: 13px;
   color: #222222;
+  cursor: pointer;
 }
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus:hover {
-  color: #F05F40;
+  color: #f05f40;
 }
 .navbar-default .nav > li.active > a,
 .navbar-default .nav > li.active > a:focus {
-  color: #F05F40 !important;
+  color: #f05f40 !important;
   background-color: transparent;
+  cursor: pointer;
 }
 .navbar-default .nav > li.active > a:hover,
 .navbar-default .nav > li.active > a:focus:hover {
@@ -117,7 +118,7 @@ section {
     border-color: rgba(34, 34, 34, 0.05);
   }
   .navbar-default.affix .navbar-header .navbar-brand {
-    color: #F05F40;
+    color: #f05f40;
     font-size: 14px;
   }
   .navbar-default.affix .navbar-header .navbar-brand:hover,
@@ -130,7 +131,7 @@ section {
   }
   .navbar-default.affix .nav > li > a:hover,
   .navbar-default.affix .nav > li > a:focus:hover {
-    color: #F05F40;
+    color: #f05f40;
   }
 }
 header {
@@ -142,7 +143,7 @@ header {
   background-size: cover;
   -o-background-size: cover;
   background-position: center;
-  background-image: url('../img/header.jpg');
+  background-image: url("../img/header.jpg");
   text-align: center;
   color: white;
 }
@@ -185,8 +186,8 @@ header .header-content .header-content-inner p {
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
-    font-family: 'VT323', 'Helvetica Neue', Arial, sans-serif;
-}
+    font-family: "VT323", "Helvetica Neue", Arial, sans-serif;
+  }
 }
 .section-heading {
   margin-top: 0;
@@ -203,12 +204,12 @@ header .header-content .header-content-inner p {
 .service-box p {
   margin-bottom: 0;
 }
-    
+
 .call-to-action h2 {
   margin: 0 auto 20px;
 }
 .text-primary {
-  color: #F05F40;
+  color: #f05f40;
 }
 
 .btn-default {
@@ -261,8 +262,8 @@ fieldset[disabled] .btn-default.active {
 }
 .btn-primary {
   color: white;
-  background-color: #F05F40;
-  border-color: #F05F40;
+  background-color: #f05f40;
+  border-color: #f05f40;
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   transition: all 0.35s;
@@ -283,11 +284,11 @@ fieldset[disabled] .btn-default.active {
   background-image: none;
 }
 .btn-primary .badge {
-  color: #F05F40;
+  color: #f05f40;
   background-color: white;
 }
 .btn {
-  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
   border: none;
   border-radius: 300px;
   font-weight: 700;
@@ -318,44 +319,49 @@ body {
   webkit-tap-highlight-color: #222222;
 }
 
-@media (min-width: 768px){
-    .charity-h2 {
-        font-size: 30px;
-    }
-    h3{
-        font-size: 15px
-    }
-
+@media (min-width: 768px) {
+  .charity-h2 {
+    font-size: 30px;
+  }
+  h3 {
+    font-size: 15px;
+  }
 }
 
 button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    outline: 0;
-    background-color: white;
-    border: 0;
-    padding: 10px 15px;
-    margin:  15px;
-    color: #150366;
-    border-radius: 3px;
-    width: 250px;
-    cursor: pointer;
-    font-size: 20px;
-    -webkit-transition-duration: 0.25s;
-    transition-duration: 0.25s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+  background-color: white;
+  border: 0;
+  padding: 10px 15px;
+  margin: 15px;
+  color: #150366;
+  border-radius: 3px;
+  width: 250px;
+  cursor: pointer;
+  font-size: 20px;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
 }
 
-button a{
-    font-weight: 900;
+button a {
+  font-weight: 900;
 }
 
 button:hover {
-    text-decoration: none;
-    font-size: 30px;
-  }
+  text-decoration: none;
+  color: white;
+}
 
-  button a:hover {
-    text-decoration: none;
-    font-size: 30px;
-  }
+button a:hover {
+  text-decoration: none;
+}
+.play-with {
+  font-size: 20px;
+}
+.play-with:hover {
+  font-size: 20px;
+  font-weight: normal;
+}
