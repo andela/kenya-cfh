@@ -1,5 +1,10 @@
-angular.module('mean.system')
-.controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) => {
+angular.module('mean.system').controller('GameController', [
+  '$scope',
+  'game',
+  '$timeout',
+  '$location',
+  'MakeAWishFactsService',
+  ($scope, game, $timeout, $location, MakeAWishFactsService) => {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
     $scope.showTable = false;
@@ -8,7 +13,6 @@ angular.module('mean.system')
     $scope.pickedCards = [];
     let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
-
     $scope.pickCard = (card) => {
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
@@ -16,8 +20,10 @@ angular.module('mean.system')
           if (game.curQuestion.numAnswers === 1) {
             $scope.sendPickedCards();
             $scope.hasPickedCards = true;
-          } else if (game.curQuestion.numAnswers === 2 &&
-            $scope.pickedCards.length === 2) {
+          } else if (
+            game.curQuestion.numAnswers === 2 &&
+            $scope.pickedCards.length === 2
+          ) {
             $scope.hasPickedCards = true;
             $timeout($scope.sendPickedCards, 300);
           }
@@ -28,8 +34,10 @@ angular.module('mean.system')
     };
 
     $scope.pointerCursorStyle = () => {
-      if ($scope.isCzar() &&
-      $scope.game.state === 'waiting for czar to decide') {
+      if (
+        $scope.isCzar() &&
+        $scope.game.state === 'waiting for czar to decide'
+      ) {
         return { cursor: 'pointer' };
       }
       return {};
@@ -38,6 +46,11 @@ angular.module('mean.system')
     $scope.sendPickedCards = () => {
       game.pickCards($scope.pickedCards);
       $scope.showTable = true;
+    };
+
+    $scope.popModal = () => {
+      $('#searchControl').hide();
+      $('#invite-players-modal').modal('show');
     };
 
     $scope.cardIsFirstSelected = (card) => {
@@ -68,18 +81,18 @@ angular.module('mean.system')
       return false;
     };
 
-    $scope.showFirst = card => game.curQuestion.numAnswers > 1
-    && $scope.pickedCards[0] === card.id;
+    $scope.showFirst = card =>
+      game.curQuestion.numAnswers > 1 && $scope.pickedCards[0] === card.id;
 
-    $scope.showSecond = card => game.curQuestion.numAnswers > 1
-    && $scope.pickedCards[1] === card.id;
+    $scope.showSecond = card =>
+      game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
 
     $scope.isCzar = () => game.czar === game.playerIndex;
 
     $scope.isPlayer = $index => $index === game.playerIndex;
 
-    $scope.isCustomGame = () => !(/^\d+$/).test(game.gameID)
-    && game.state === 'awaiting players';
+    $scope.isCustomGame = () =>
+      !/^\d+$/.test(game.gameID) && game.state === 'awaiting players';
 
     $scope.isPremium = $index => game.players[$index].premium;
 
@@ -125,12 +138,17 @@ angular.module('mean.system')
     });
 
     $scope.$watch('game.state', () => {
-      if (game.state === 'waiting for czar to decide'
-      && $scope.showTable === false) {
+      if (
+        game.state === 'waiting for czar to decide' &&
+        $scope.showTable === false
+      ) {
         $scope.showTable = true;
       }
-      if ($scope.isCzar() && game.state === 'czar pick card'
-      && game.table.length === 0) {
+      if (
+        $scope.isCzar() &&
+        game.state === 'czar pick card' &&
+        game.table.length === 0
+      ) {
         $('#myModal').modal('show');
       } else {
         $('.modal-close').trigger('click');
@@ -149,8 +167,14 @@ angular.module('mean.system')
               const txt = `Give the following link to your friends 
                            so they can join your game: `;
               $('#lobby-how-to-play').text(txt);
-              $('#oh-el').css({ 'text-align': 'center', 'font-size': '22px',
-                'background': 'white', 'color': 'black' }).text(link);
+              $('#oh-el')
+                .css({
+                  'text-align': 'center',
+                  'font-size': '22px',
+                  background: 'white',
+                  color: 'black'
+                })
+                .text(link);
             }, 200);
             $scope.modalShown = true;
           }
@@ -158,11 +182,12 @@ angular.module('mean.system')
       }
     });
 
-    if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
+    if ($location.search().game && !/^\d+$/.test($location.search().game)) {
       game.joinGame('joinGame', $location.search().game);
     } else if ($location.search().custom) {
       game.joinGame('joinGame', null, true);
     } else {
       game.joinGame();
     }
-  }]);
+  }
+]);

@@ -1,5 +1,8 @@
-angular.module('mean.system')
-  .factory('game', ['socket', '$timeout', (socket, $timeout) => {
+
+angular.module('mean.system').factory('game', [
+  'socket',
+  '$timeout',
+  (socket, $timeout) => {
     const game = {
       id: null,
       gameID: null,
@@ -11,7 +14,7 @@ angular.module('mean.system')
       table: [],
       czar: null,
       playerMinLimit: 3,
-      playerMaxLimit: 6,
+      playerMaxLimit: 12,
       pointLimit: null,
       state: null,
       round: 0,
@@ -24,7 +27,7 @@ angular.module('mean.system')
 
     const notificationQueue = [];
     let timeout = false;
-    const self = this;
+    // eslint-disable-next-line no-unused-vars
     let joinOverrideTimeout = 0;
 
     const setNotification = () => {
@@ -77,17 +80,21 @@ angular.module('mean.system')
 
       game.joinOverride = false;
       clearTimeout(game.joinOverrideTimeout);
-
+      // eslint-disable-next-line array-callback-return
       gameData.players.map((player, index) => {
         if (game.id === player.socketID) {
           game.playerIndex = index;
         }
       });
 
-      const newState = (gameData.state !== game.state);
+      const newState = gameData.state !== game.state;
 
-      if (gameData.round !== game.round && gameData.state !== 'awaiting players' &&
-      gameData.state !== 'game ended' && gameData.state !== 'game dissolved') {
+      if (
+        gameData.round !== game.round &&
+        gameData.state !== 'awaiting players' &&
+        gameData.state !== 'game ended' &&
+        gameData.state !== 'game dissolved'
+      ) {
         game.time = game.timeLimits.stateChoosing - 1;
         timeSetViaUpdate = true;
       } else if (newState && gameData.state === 'waiting for czar to decide') {
@@ -134,8 +141,10 @@ angular.module('mean.system')
         });
       }
 
-      if (game.state !== 'waiting for players to pick' ||
-       game.players.length !== gameData.players.length) {
+      if (
+        game.state !== 'waiting for players to pick' ||
+        game.players.length !== gameData.players.length
+      ) {
         game.players = gameData.players;
       }
 
@@ -146,11 +155,14 @@ angular.module('mean.system')
       if (gameData.state === 'waiting for players to pick') {
         game.czar = gameData.czar;
         game.curQuestion = gameData.curQuestion;
-        game.curQuestion.text = gameData.curQuestion.text.replace(/_/g, '<u></u>');
+        game.curQuestion.text = gameData.curQuestion.text.replace(
+          /_/g,
+          '<u></u>'
+        );
 
         if (newState) {
           if (game.czar === game.playerIndex) {
-            addToNotificationQueue('You\'re the Card Czar! Please wait!');
+            addToNotificationQueue("You're the Card Czar! Please wait!");
           } else if (game.curQuestion.numAnswers === 1) {
             addToNotificationQueue('Select an answer!');
           } else {
@@ -163,15 +175,19 @@ angular.module('mean.system')
         } else {
           addToNotificationQueue('The czar is contemplating...');
         }
-      } else if (gameData.state === 'winner has been chosen' &&
-              game.curQuestion.text.indexOf('<u></u>') > -1) {
+      } else if (
+        gameData.state === 'winner has been chosen' &&
+        game.curQuestion.text.indexOf('<u></u>') > -1
+      ) {
         game.curQuestion = gameData.curQuestion;
       } else if (gameData.state === 'awaiting players') {
         joinOverrideTimeout = $timeout(() => {
           game.joinOverride = true;
         }, 15000);
-      } else if (gameData.state === 'game dissolved' ||
-       gameData.state === 'game ended') {
+      } else if (
+        gameData.state === 'game dissolved' ||
+        gameData.state === 'game ended'
+      ) {
         game.players[game.playerIndex].hand = [];
         game.time = 0;
       }
@@ -190,7 +206,9 @@ angular.module('mean.system')
     };
 
     game.startGame = () => {
-      socket.emit('startGame');
+      socket.emit('startGame', {
+        regionId: localStorage.getItem('regionId')
+      });
     };
 
     game.startNextGameRound = () => {
@@ -214,4 +232,5 @@ angular.module('mean.system')
     decrementTime();
 
     return game;
-  }]);
+  }
+]);

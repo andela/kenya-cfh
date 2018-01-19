@@ -4,6 +4,8 @@ import Player from './player';
 
 require('console-stamp')(console, 'm/dd HH:MM:ss');
 
+const DEFAULT_REGION = '59b90186ad7d37a9fb7d3630';
+
 const avatars = require(__dirname + '/../../app/controllers/avatars.js').all();
 const User = mongoose.model('User');
 
@@ -79,7 +81,7 @@ module.exports = (io) => {
       thisgame.assignGuestNames();
       thisgame.sendUpdate();
     } else {
-      thisgame = gamesNeedingPlayers[0];
+      [thisgame] = gamesNeedingPlayers;
       allPlayers[socket.id] = true;
       thisgame.players.push(player);
       socket.join(thisgame.gameID);
@@ -181,9 +183,10 @@ module.exports = (io) => {
       joinGame(socket, gameData);
     });
 
-    socket.on('startGame', () => {
+    socket.on('startGame', (data) => {
       if (allGames[socket.gameID]) {
         const thisGame = allGames[socket.gameID];
+        thisGame.regionId = data.regionId || DEFAULT_REGION;
         if (thisGame.players.length >= thisGame.playerMinLimit) {
           gamesNeedingPlayers.forEach((theGame, index) => {
             if (theGame.gameID === socket.gameID) {
