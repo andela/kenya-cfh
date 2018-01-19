@@ -1,149 +1,122 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Advent+Pro|Berkshire+Swash|VT323">    
- <link rel="stylesheet" type="text/css" href="../css/app.css">
- 
- 
- <title>Cards for humanity&nbsp|&nbspPlay Game</title>
-  </head>
-  <body>
-      <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-          <div class="container-fluid">
-              <!-- Brand and toggle get grouped for better mobile display -->
-              <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                      <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                  </button>
-                  <a class="navbar-brand page-scroll" href="#page-top" style="color: red;">CARDS FOR HUMANITY</a>
-              </div>
-              <!-- Collect the nav links, forms, and other content for toggling -->
-              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav navbar-right">
-                      <li>
-                          <a href="/" ng-click="abandonGame()">ABANDON GAME</a>
-                      </li>
-                  </ul>
-              </div>
-              <!-- /.navbar-collapse -->
+  <!-- Latest compiled and minified CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Advent+Pro|Berkshire+Swash|VT323">
+  <link rel="stylesheet" type="text/css" href="../css/app.css">
+  <link rel="stylesheet" type="text/css" href="../css/animate.css">
+
+
+  <title>Cards for humanity&nbsp|&nbspPlay Game</title>
+</head>
+
+<body>
+  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span> Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand page-scroll" href="#page-top" style="color: red;">CARDS FOR HUMANITY</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a class="page-scroll" href="/">TAKE A TOUR</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="/">ABANDON GAME</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+  <section id="main-banner" class="container" ng-controller="GameController">
+    <div class="modal fade" id="myModal" style="background-color:#381c5f9c" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color:rgba(255, 255, 255, 0.568)">
+          <div class="modal-header text-center">
+            <h2 class="modal-title" style="font-weight:900;font-size:25px;color: #381c5f" id="myModalLabel">You are the Almighty Card Czar</h2>
+            <h3 class="shuffle" style="font-weight:900;font-size:20px;color: #381c5f">PICK A CARD</h3>
           </div>
-          <!-- /.container-fluid -->
-      </nav>
-    <section id="main-banner" class="container">
-      
-      
-      <div class="game-screen row">
+          <div class="row">
+            <div class="col-sm-offset-1">
+              <div class="modal-body">
+                <button style="background-color:rgba(255, 255, 255, 0.226); margin:5px">
+                  <img ng-click="startNextGameRound()" ng-src="../img/card-1.jpeg" class='animated flipInX' alt="card-image">
+                </button>
+                <button style="background-color:rgba(255, 255, 255, 0.226);margin:5px">
+                  <img ng-click="startNextGameRound()" ng-src="../img/card-1.jpeg" class='animated flipInX' alt="card-image">
+                </button>
+                <button style="background-color:rgba(255, 255, 255, 0.226);margin:5px">
+                  <img ng-click="startNextGameRound()" ng-src="../img/card-1.jpeg" class='animated flipInX' alt="card-image">
+                </button>
+                <button style="background-color:rgba(255, 255, 255, 0.226);margin:5px">
+                  <img ng-click="startNextGameRound()" ng-src="../img/card-1.jpeg" class='animated flipInX' alt="card-image">
+                </button>
+              </div>
+              <div>
+                <div class="modal-close" data-dismiss="modal"></div>
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-screen row">
       <br/>
       <div class="col-sm-12 col-lg-9">
         <div class="game-header row">
-          <div class ="col-md-3 col-sm-3 col-xs-3 col-lg-3 " id="timer-container">
-            <timer>
-            </timer>
-            
-            </div>
-            <div class ="col-md-9 col-sm-9 col-xs-9 col-lg-9 game">
-            <question>
-              <div id="game-container-inner" class="row">
-              <div class="card fixed-height-230 cfh-header">
-                <div class="card-content">
-                  <div class="col-sm-12 text-center" id="finding-players">
-                   <h1 class="center-aligned">
-                    FINDING PLAYERS
-                   </h1>
-                  </div>
-                  <div class="col-sm-12 text-center">
-                     <img src="../img/loaders/loader.gif"/>
-                  </div>
-                  <div class="col-sm-2 col-md-2 text-center" id="player-count">
-                    <h2>1 / 12</h2>
-                    <p> PLAYERS</p>
-                  </div>
-                  <div class="col-sm-12 col-md-9 left-align">
-                   </br> 
-                   <p>
-                    <button type="" id="button">START GAME</button>
-                    &nbsp 
-                    <button type="" id="button">INVITE FRIENDS</button>
-                   </p>
-                  </br>
-                </br>
-                  </div>
-                </div>
-                </div>
-              </div>
-            </question>
-            
+          <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3 " id="timer-container">
+            <timer></timer>
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-9 col-lg-9 game">
+            <question></question>
+
+
+
             <div class="row game-row">
-                <div class="card ">
-                  <answers>
-                    
-                    <div class="col-lg-12 game longspan info-container">
-                    <div class="card-content-2">
-                      </br>
-                      <h2 class="center-align" id="how-to-play">
-                       HOW TO PLAY
-                      </h2>
-                    </br>
-                    <ol>
-                      <li>Each player will always begin with and always have 10 cards</li>
-                      <li>For each round one player is chosen as the Card Czar</li>
-                      <li>Everyone else answers the black question card by clicking on the card they want to use</li>
-                      <li>The Card Czar then picks the favorite answer and whoever played that card wins that round</li>
-                      <li>Want to adorn your avatar with a glorious crown? donate to charity after the game!</li>
-                    </ol>
-                  </br></br></br>
-                    </div>
-                    <div class="card-content-3 row">
-                      <div class="col-sm-12 text-center" id="donate">
-                      </br></br>
-                        <h2 id="donate-now">Please remember to donate to save a child!</h2>
-                    </br>
-                        <button type="" id="button">MAKE DONATION</button>
-                    </br></br>
-                         
-                      </div>
-  
-                    </div>
-                    </div>
-              
-      
-                  </answers>
+              <div class="cards">
+                <div class="col-lg-12 game longspan info-container">
+                  <answers></answers>
                 </div>
               </div>
-            
+            </div>
+
           </div>
-          
-          
-          </div>
-        </div> 
-      
-      
-    
-       
+
+
+        </div>
       </div>
-     <div class="col-sm-12 col-lg-3">
-      <player>
+      <div id="social-bar-container" class="col-md-3 col-sm-3 col-xs-3 col-lg-2 text-center" style="margin:3px;">
+        <player></player>
+      </div>
 
-      </player>
-      <chat>
 
-      </chat>
-     </div>
-    
-    </section>
-    
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-      <script  src="js/index.js"></script>
-    </body>
-  </html>
+
+
+    </div>
+    <div class="col-sm-12 col-lg-3">
+    </div>
+
+
+
+  </section>
+</body>
+
+</html>
