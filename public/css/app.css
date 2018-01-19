@@ -1,0 +1,352 @@
+html {
+  background: linear-gradient(
+      to bottom,
+      rgba(8, 5, 56, 0.68),
+      rgba(8, 5, 56, 0.68)
+    ),
+    url(../img/icons/jumbo1.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: auto;
+
+  /* Set up positioning */
+
+  top: 0;
+  left: 0;
+}
+body {
+  background-color: transparent !important;
+}
+
+.mod-title{
+  background-color: #150366c2;
+}
+
+#mod-btn {
+  background-color: #4b428b;
+  color: white;
+  border-radius: 3px;
+  padding: 10px 15px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+}
+
+#mod-btn:hover {
+  color: white !important;
+  font-weight: bold !important;
+  font-size: 23px !important;
+}
+
+#modal-text {
+  color: black;
+  font-size: 18px;
+}
+
+.mod-body {
+  background-color: rgba(255, 255, 255, 0.226) !important;
+}
+
+#main-banner {
+  margin: 0px;
+  position: relative;
+  display: block;
+  width: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.game-row {
+  font-size: 23px;
+  font-weight: 900;
+}
+.game {
+  font-size: 23px;
+  font-weight: 900;
+}
+.game-screen {
+  margin-bottom: 30px;
+}
+body {
+  font-family: "Advent Pro";
+  color: white;
+
+  min-height: 100%;
+  margin: 0px;
+}
+.card-content > div > h1 {
+  letter-spacing: 5px;
+  font-weight: 900;
+}
+#player-count > h2 {
+  letter-spacing: 5px;
+  font-weight: 900;
+}
+#player-count > p {
+  letter-spacing: 5px;
+  font-weight: 900;
+}
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+  background-color: white;
+  border: 0;
+  padding: 10px 15px;
+  color: #150366;
+  border-radius: 3px;
+  width: 250px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+}
+button:hover {
+  background-color: #391c5f;
+  color: white;
+  font-weight: bold;
+  font-size: 23px;
+}
+
+li {
+  font-size: 25px;
+}
+.timer {
+  /* border: 2px solid orange; */
+  box-shadow: none !important;
+  background-color: rgba(255, 255, 255, 0.226) !important;
+}
+
+.cards {
+  margin-bottom: 0px !important;
+  background-color: rgba(255, 255, 255, 0.226);
+  border-radius: 5px;
+}
+.cards.players-layout {
+  display: inline-block;
+}
+.cards .card-content {
+  border-radius: 2px 2px 2px 2px;
+  border: 1px solid rgba(255, 255, 255, 0.226);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.226);
+}
+.info-container {
+  border: 1px solid rgba(255, 255, 255, 0.226);
+  border-radius: 2px 2px 2px 2px;
+  background-color: rgba(255, 255, 255, 0.226);
+}
+#how-to-play {
+  letter-spacing: 5px;
+  font-weight: 900;
+}
+.card-content-2 {
+  background-color: #381c5fbb;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+#donate-now {
+  font-weight: 900;
+}
+
+.center,
+.center-align {
+  text-align: center;
+}
+.fixed-height-230 {
+  height: 230px;
+  overflow: scroll !important;
+}
+.cards {
+  position: relative;
+  margin: 0.5rem 0 1rem 0;
+  background-color: rgba(255, 255, 255, 0.226);
+  -webkit-transition: -webkit-box-shadow 0.25s;
+  transition: -webkit-box-shadow 0.25s;
+  transition: box-shadow 0.25s;
+  transition: box-shadow 0.25s, -webkit-box-shadow 0.25s;
+  border-radius: 2px;
+}
+.countdown-timer {
+  font-size: 150px;
+  color: #fff;
+  margin: 0px;
+  font-family: VT323;
+  padding: 5px;
+}
+.cfh-header {
+  background-color: rgba(255, 255, 255, 0.274);
+}
+.div-1-timer {
+  background-color: rgba(255, 255, 255, 0.226);
+  border-radius: 5px;
+  padding: 10px;
+}
+.div-1-background-inner {
+  width: auto;
+  height: auto;
+
+  background-color: rgba(255, 255, 255, 0.226);
+  border-radius: 5px;
+}
+
+.div-1-background-inner > h1 {
+  font-size: 150px;
+}
+.game-screen {
+  margin-top: 50px;
+}
+.game-header {
+  margin: 0px;
+}
+.navbar-default {
+  background-color: white;
+  border-color: rgba(34, 34, 34, 0.05);
+  font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  -webkit-transition: all 0.35s;
+  -moz-transition: all 0.35s;
+  transition: all 0.35s;
+}
+.navbar-default .navbar-header .navbar-brand {
+  color: #f05f40;
+  font-family: "Advent Pro", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.navbar-default .navbar-header .navbar-brand:hover,
+.navbar-default .navbar-header .navbar-brand:focus {
+  color: #eb3812;
+  font-weight: bold;
+}
+
+.navbar-default .navbar-header .navbar-toggle {
+  font-weight: 700;
+  font-size: 23px;
+  color: #f05f40;
+  text-transform: uppercase;
+}
+
+.navbar-default .nav > li > a,
+.navbar-default .nav > li > a:focus {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 18px;
+  color: #150366;
+  font-family: "Advent Pro", cursive;
+}
+
+.navbar-default .nav > li > a:hover,
+.navbar-default .nav > li > a:focus:hover {
+  color: #150366;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.navbar-default .nav > li.active > a,
+.navbar-default .nav > li.active > a:focus {
+  color: #150366 !important;
+  background-color: transparent;
+}
+
+.navbar-default .nav > li.active > a:hover,
+.navbar-default .nav > li.active > a:focus:hover {
+  background-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .navbar-default {
+    background-color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  .navbar-default .navbar-header .navbar-brand {
+    color: #eb3812;
+    font-size: 23px;
+  }
+
+  .navbar-default .navbar-header .navbar-brand:hover,
+  .navbar-default .navbar-header .navbar-brand:focus {
+    color: #eb3812;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  .navbar-default .nav > li > a,
+  .navbar-default .nav > li > a:focus {
+    color: #150366;
+    font-size: 18px;
+  }
+
+  .navbar-default .nav > li > a:hover,
+  .navbar-default .nav > li > a:focus:hover {
+    color: #150366;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .navbar-default.affix {
+    background-color: white;
+    border-color: #f05f40;
+  }
+
+  .navbar-default.affix .navbar-header .navbar-brand {
+    color: #f05f40;
+    font-size: 23px;
+  }
+
+  .navbar-default.affix .navbar-header .navbar-brand:hover,
+  .navbar-default.affix .navbar-header .navbar-brand:focus {
+    color: #eb3812;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  .navbar-default.affix .nav > li > a,
+  .navbar-default.affix .nav > li > a:focus {
+    color: #150366;
+  }
+
+  .navbar-default.affix .nav > li > a:hover,
+  .navbar-default.affix .nav > li > a:focus:hover {
+    color: #150366;
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+span.timer-message {
+  font-size: 18px !important;
+}
+card.smallest {
+  font-size: 0.5em;
+  font-family: "Advent Pro";
+  font-weight: 900;
+}
+.card {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 18%;
+  height: 215px;
+  padding: 1%;
+  margin: 1%;
+  background-color: rgba(255, 255, 255, 0.863);
+  border-radius: 8px;
+  color: #150366;
+  font-family: "Advent Pro";
+  font-size: 20px;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+#searchResult {
+  color: black !important;
+}
