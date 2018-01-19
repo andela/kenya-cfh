@@ -15,6 +15,9 @@ angular.module("mean.system").controller("GameController", [
     let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
     $scope.pickCard = card => {
+      const sound = new Audio();
+      sound.src = "sound/sound.mp3";
+      sound.play();
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
           $scope.pickedCards.push(card.id);
@@ -49,8 +52,8 @@ angular.module("mean.system").controller("GameController", [
       $scope.showTable = true;
     };
     $scope.popModal = () => {
-      $('#searchControl').hide();
-      $('#invite-players-modal').modal('show');
+      $("#searchControl").hide();
+      $("#invite-players-modal").modal("show");
     };
 
     $scope.cardIsFirstSelected = card => {
@@ -106,6 +109,9 @@ angular.module("mean.system").controller("GameController", [
     };
 
     $scope.pickWinning = winningSet => {
+      const sound = new Audio();
+      sound.src = "sound/SUCCESSPICKUP.wav";
+      sound.play();
       if ($scope.isCzar()) {
         game.pickWinning(winningSet.card[0]);
         $scope.winningCardPicked = true;
@@ -119,6 +125,9 @@ angular.module("mean.system").controller("GameController", [
     };
 
     $scope.startNextGameRound = () => {
+      const sound = new Audio();
+      sound.src = "sound/czarsound.mp3";
+      sound.play();
       game.startNextGameRound();
     };
 
@@ -184,13 +193,13 @@ angular.module("mean.system").controller("GameController", [
 
     $scope.checkNumOfPlayers = () => {
       if (game.players.length >= game.playerMinLimit) {
-        $('#startModal').modal({
+        $("#startModal").modal({
           keyboard: false,
-          backdrop: 'static'
+          backdrop: "static"
         });
-        $('#startModal').modal('show');
+        $("#startModal").modal("show");
       } else {
-        $('#few-players-modal').modal('show');
+        $("#few-players-modal").modal("show");
       }
     };
 
