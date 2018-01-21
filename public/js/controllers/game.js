@@ -155,6 +155,18 @@ angular.module('mean.system').controller('GameController', [
       }
     });
 
+    $scope.checkNumOfPlayers = () => {
+      if (game.players.length >= game.playerMinLimit) {
+        $('#startModal').modal({
+          keyboard: false,
+          backdrop: 'static'
+        });
+        $('#startModal').modal('show');
+      } else {
+        $('#few-players-modal').modal('show');
+      }
+    };
+
     $scope.$watch('game.gameID', () => {
       if (game.gameID && game.state === 'awaiting players') {
         if (!$scope.isCustomGame() && $location.search().game) {
