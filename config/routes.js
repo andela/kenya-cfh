@@ -1,3 +1,6 @@
+import { requiresLogin } from './middlewares/authorization';
+import saveGameLogs from '../app/controllers/game';
+
 const users = require('../app/controllers/users');
 const answers = require('../app/controllers/answers');
 const questions = require('../app/controllers/questions');
@@ -93,4 +96,7 @@ module.exports = (app, passport) => {
   //  Home route
   app.get('/play', index.play);
   app.get('/', index.render);
+
+  // Game route
+  app.post('/api/v1/games/:id/start', requiresLogin, saveGameLogs);
 };
