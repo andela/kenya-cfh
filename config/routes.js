@@ -1,10 +1,22 @@
 import { requiresLogin } from './middlewares/authorization';
 import saveGameLogs from '../app/controllers/game';
-import users from '../app/controllers/users';
-import answers from '../app/controllers/answers';
-import questions from '../app/controllers/questions';
-import avatars from '../app/controllers/avatars';
-import index from '../app/controllers/index';
+import {
+  authCallback,
+  signin,
+  signup,
+  signout,
+  session,
+  checkAvatar,
+  avatar,
+  create,
+  searchUser,
+  inviteUser,
+  // login,
+  addDonation,
+  show,
+  me,
+  user,
+} from '../app/controllers/users';
 
 
 module.exports = (app, passport) => {
