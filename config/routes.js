@@ -1,4 +1,3 @@
-// const users = require('../app/controllers/users');
 import {
   authCallback,
   signin,
@@ -10,13 +9,16 @@ import {
   create,
   searchUser,
   inviteUser,
-  // login,
   addDonation,
   show,
   me,
   user,
 } from '../app/controllers/users';
 
+import { requiresLogin } from './middlewares/authorization';
+import saveGameLogs from '../app/controllers/game';
+
+const users = require('../app/controllers/users');
 const answers = require('../app/controllers/answers');
 const questions = require('../app/controllers/questions');
 const avatars = require('../app/controllers/avatars');
@@ -113,4 +115,7 @@ module.exports = (app, passport) => {
   //  Home route
   app.get('/play', index.play);
   app.get('/', index.render);
+
+  // Game route
+  app.post('/api/v1/games/:id/start', requiresLogin, saveGameLogs);
 };

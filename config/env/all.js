@@ -1,9 +1,17 @@
-var path = require('path'),
-rootPath = path.normalize(__dirname + '/../..');
-var keys = rootPath + '/keys.txt';
+import dotenv from 'dotenv';
+import path from 'path';
 
-module.exports = {
-	root: rootPath,
-	port: process.env.PORT || 3000,
-    db: process.env.MONGOHQ_URL
+dotenv.config();
+const rootPath = path.normalize(__dirname + '/../..');
+
+const testDb = process.env.MONGOHQ_TEST;
+const prodDB = process.env.MONGOHQ_URL;
+
+const database = (process.env.NODE_ENV === 'test') ? testDb : prodDB;
+
+export default {
+  root: rootPath,
+  port: process.env.PORT || 3000,
+  db: database,
+  secret: process.env.SECRET
 };
