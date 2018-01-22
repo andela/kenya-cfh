@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import config from './config/config';
 import expressConfig from './config/express';
+import router from './config/routes';
 
 dotenv.config();
 
@@ -60,7 +61,7 @@ app.use((req, res, next) => {
 expressConfig(app, passport, mongoose);
 
 // Bootstrap routes
-require('./config/routes')(app, passport, auth);
+router(app, passport, auth);
 
 // Start the app by listening on <port>
 const { port } = config;

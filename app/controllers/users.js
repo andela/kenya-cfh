@@ -2,13 +2,12 @@ import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import validateSignup from '../validators/validateSignup';
 import validateSignin from '../validators/validateSignin';
+import User from '../models/user';
 /* eslint-disable no-underscore-dangle, no-shadow */
 
 /**
  * Module dependencies.
  */
-const mongoose = require('mongoose'),
-  User = mongoose.model('User');
 const avatars = require('./avatars').all();
 
 
