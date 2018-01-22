@@ -1,8 +1,11 @@
-const users = require('../app/controllers/users');
-const answers = require('../app/controllers/answers');
-const questions = require('../app/controllers/questions');
-const avatars = require('../app/controllers/avatars');
-const index = require('../app/controllers/index');
+import { requiresLogin } from './middlewares/authorization';
+import saveGameLogs from '../app/controllers/game';
+import users from '../app/controllers/users';
+import answers from '../app/controllers/answers';
+import questions from '../app/controllers/questions';
+import avatars from '../app/controllers/avatars';
+import index from '../app/controllers/index';
+
 
 module.exports = (app, passport) => {
   // User Routes
@@ -93,4 +96,7 @@ module.exports = (app, passport) => {
   //  Home route
   app.get('/play', index.play);
   app.get('/', index.render);
+
+  // Game route
+  app.post('/api/v1/games/:id/start', requiresLogin, saveGameLogs);
 };
