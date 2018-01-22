@@ -110,4 +110,11 @@ angular
         }
       }
     })
-  ]);
+  ])
+  .directive('chat', () => {
+    return {
+      restrict: 'EA',
+      templateUrl: '/views/chat.html',
+      link: () => {}
+    };
+  });
