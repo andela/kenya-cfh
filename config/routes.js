@@ -16,9 +16,11 @@ module.exports = (app, passport) => {
 
 
   // Setting up the users api
-  app.post('/api/auth/signup', users.create);
-  app.post('/users/avatars', users.avatars);
-  app.post('/api/auth/login', users.login);
+  app.post('/api/auth/signup', create);
+  app.post('/users/avatars', avatar);
+  app.post('/api/auth/login', create);
+  app.get('/api/search', searchUser);
+  app.post('/api/users/invite', inviteUser);
 
   // Donation Routes
   app.post('/donations', users.addDonation);

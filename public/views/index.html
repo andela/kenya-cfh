@@ -86,17 +86,39 @@
                         <a href="/#!/signup">SIGN UP</a>
                     </button>
 
-                    <button type="submit" id="login-button" ng-show="showOptions" ng-click="login()">
-                        <a href="/play">PLAY AS GUEST</a>
+                    <button type="submit" ng-click="selectRegionToPlayAsGuest()" id="login-button" ng-show="showOptions" ng-click="login()">
+                        <a href="javascript:;">PLAY AS GUEST</a>
                     </button>
 
-                    <button class="play-with" type="submit" id="sign-up-btn-landing" ng-hide="showOptions">
-                        <a href="/play">PLAY WITH FRIENDS</a>
+                    <button class="play-with" ng-click="selectRegionToPlayWithFriends()" type="submit" id="sign-up-btn-landing" ng-hide="showOptions">
+                        <a href="javascript:;">PLAY WITH FRIENDS</a>
                     </button>
-                    <button class="play-with" type="submit" id="sign-up-btn-landing" ng-hide="showOptions">
-                        <a href="/play">PLAY WITH OTHERS</a>
+                    <button class="play-with" ng-click="selectRegionToPlayAsGuest()" type="submit" id="sign-up-btn-landing" ng-hide="showOptions">
+                        <a href="javascript:;">PLAY WITH OTHERS</a>
                     </button>
 
+                </div>
+
+                <div class="modal fade" id="selectRegion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header container-fluid" style = "background-color:blueviolet; color:white;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style = "color:white;">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel" >Select a region</h4>
+                        </div>
+                        <div class="modal-body" style = "padding:10px;">  
+                            <p></p>p></p>  
+                            <select ng-model="selectedRegion" class="form-control">
+                                <option value="59b90186ad7d37a9fb7d3630">Africa</option>
+                                <option value="59b8ffde28650f1362ca5941">America</option>
+                                <option value="59b8ffd328650f1362ca5940">Asia</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" ng-click="startGameForRegion()" class="btn btn-primary">Play Game</button>
+                        </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

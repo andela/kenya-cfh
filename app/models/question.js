@@ -5,30 +5,30 @@ var mongoose = require('mongoose'),
     config = require('../../config/config'),
     Schema = mongoose.Schema;
 
-
 /**
  * Question Schema
  */
-var QuestionSchema = new Schema({
-    id: {
-        type: Number
-    },
-    text: {
-        type: String,
-        default: '',
-        trim: true
-    },
-    numAnswers: {
-        type: Number
-    },
-    official: {
-        type: Boolean
-    },
-    expansion: {
-        type: String,
-        default: '',
-        trim: true
-    }
+const QuestionSchema = new Schema({
+  id: {
+    type: Number
+  },
+  text: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  numAnswers: {
+    type: Number
+  },
+  official: {
+    type: Boolean
+  },
+  regionId: String,
+  expansion: {
+    type: String,
+    default: '',
+    trim: true
+  }
 });
 
 /**
