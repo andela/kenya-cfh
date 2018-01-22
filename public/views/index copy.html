@@ -78,6 +78,30 @@
             </div>
         </div>
     </header>
+    <div class="modal fade" id="selectRegion" tabindex="-1" role="dialog" aria-labelledby="selectRegion">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <h5 class="text-center mb-4">
+                Select your region:.
+              </h5>
+              <select class="form-control mb-4" ng-model="selectedRegion">
+                <option value="59b90186ad7d37a9fb7d3630">Africa</option>
+                <option value="59b8ffde28650f1362ca5941">Asia</option>
+                <option value="59b91ad4605e234f4555a4dc">Americas</option>
+                <option value="59b8ffd328650f1362ca5940">Europe</option>
+                <option value="59b91ad4605e234f4555a4dd">Americans</option>
+                <option value="59b91ad4605e234f4555a4de">Australia</option>
+                <option value="59b91ad4605e234f4555a4df">Carribean</option>
+              </select>
+              <div class="text-center">
+                <button class="btn btn-game" ng-click="startGameForRegion()">Start A new Game</button>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <section class="bg-primary" id="about">
         <div class="container">

@@ -4,6 +4,10 @@ import underscore from 'underscore';
 const questions = require(`${__dirname}/../../app/controllers/questions.js`);
 //  eslint-disable-next-line import/no-dynamic-require
 const answers = require(`${__dirname}/../../app/controllers/answers.js`);
+const DEFAULT_REGION_ID = '59b90186ad7d37a9fb7d3630';
+const STATE_CHOOSING_TIME_LIMITS = 21;
+const STATE_JUDGING_TIME_LIMITS = 16;
+const STATE_RESULT_TIME_LIMIT = 6;
 const guestNames = [
   'Disco Potato',
   'Silver Blister',
@@ -46,10 +50,11 @@ class Game {
     this.questions = null;
     this.answers = null;
     this.curQuestion = null;
+    this.regionId = DEFAULT_REGION_ID;
     this.timeLimits = {
-      stateChoosing: 21,
-      stateJudging: 16,
-      stateResults: 6
+      sstateChoosing: STATE_CHOOSING_TIME_LIMITS,
+      stateJudging: STATE_JUDGING_TIME_LIMITS,
+      stateResults: STATE_RESULT_TIME_LIMIT
     };
     this.choosingTimeout = 0;
     this.judgingTimeout = 0;
@@ -140,12 +145,18 @@ class Game {
     });
 
     const self = this;
-    async.parallel([this.getQuestions, this.getAnswers], (err, results) => {
-      [self.questions] = results;
-      [, self.answers] = results;
+    async.parallel(
+      [
+        this.getQuestions,
+        this.getAnswers
+      ],
+      (err, results) => {
+        [self.questions] = results;
+        [, self.answers] = results;
 
-      self.startGame();
-    });
+        self.startGame();
+      }
+    );
   }
 
   /**
@@ -276,7 +287,7 @@ class Game {
   getQuestions(callback) {
     questions.allQuestionsForGame((allQuestions) => {
       callback(null, allQuestions);
-    });
+    }, this.regionId);
   }
 
   /**

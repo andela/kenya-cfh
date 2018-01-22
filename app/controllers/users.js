@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
 import validateSignup from '../validators/validateSignup';
 import validateSignin from '../validators/validateSignin';
+/* eslint-disable no-underscore-dangle, no-shadow */
+
 /**
  * Module dependencies.
  */
@@ -8,13 +11,8 @@ const mongoose = require('mongoose'),
   User = mongoose.model('User');
 const avatars = require('./avatars').all();
 
-/**
- * Auth callback
- * @param {object} req - the request object
- * @param {object} res - the response object
- * @returns {func} redirect user back
- */
-exports.authCallback = (req, res) => {
+
+const authCallback = (req, res) => {
   res.redirect('/chooseavatars');
 };
 
@@ -24,7 +22,7 @@ exports.authCallback = (req, res) => {
  * @param {object} res - the response object
  * @returns {func} Shows login form
  */
-exports.signin = (req, res) => {
+const signin = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signin?error=invalid');
   } else {
@@ -38,7 +36,7 @@ exports.signin = (req, res) => {
  * @param {object} res - the response object
  * @returns {func} Show signup form
  */
-exports.signup = (req, res) => {
+const signup = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signup');
   } else {
@@ -52,7 +50,7 @@ exports.signup = (req, res) => {
  * @param {object} res - the response object
  * @returns {func} Logs out the user
  */
-exports.signout = (req, res) => {
+const signout = (req, res) => {
   req.logout();
   res.redirect('/');
 };
@@ -63,7 +61,7 @@ exports.signout = (req, res) => {
  * @param {object} res - the response object
  * @returns {func} Activate the session
  */
-exports.session = (req, res) => {
+const session = (req, res) => {
   res.redirect('/');
 };
 
@@ -75,7 +73,7 @@ exports.session = (req, res) => {
  * @param {object} res - the response object
  * @returns {func} assign an avatar to a registered user
  */
-exports.checkAvatar = (req, res) => {
+const checkAvatar = (req, res) => {
   if (req.user && req.user._id) {
     User.findOne({
       _id: req.user._id
@@ -99,7 +97,7 @@ exports.checkAvatar = (req, res) => {
  * @param {object} res - the response object
  * @returns {object} Creates a new user
  */
-exports.create = (req, res) => {
+const create = (req, res) => {
   const { errors, valid } = validateSignup(req.body);
   if (!valid) {
     return res.status(400).json(errors);
@@ -152,8 +150,7 @@ exports.create = (req, res) => {
  * @returns {object} Login an existing user
  */
 
-exports.login = (req, res) => {
-
+const login = (req, res) => {
   const { errors, valid } = validateSignin(req.body);
   if (!valid) {
     return res.status(400).send(errors);
@@ -197,7 +194,7 @@ exports.login = (req, res) => {
  * @param {object} res - the response object
  * @returns {func} assign an avatar to a user
  */
-exports.avatars = (req, res) => {
+const avatar = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
   if (req.user && req.user._id && req.body.avatar !== undefined &&
     /\d/.test(req.body.avatar) && avatars[req.body.avatar]) {
@@ -212,7 +209,7 @@ exports.avatars = (req, res) => {
   return res.redirect('/#!/app');
 };
 
-exports.addDonation = (req, res) => {
+const addDonation = (req, res) => {
   if (req.body && req.user && req.user._id) {
     // Verify that the object contains crowdrise data
     if (req.body.amount &&
@@ -248,7 +245,7 @@ exports.addDonation = (req, res) => {
  * @param {object} res - the response object
  * @returns {func} Shows the user profile
  */
-exports.show = (req, res) => {
+const show = (req, res) => {
   const user = req.profile;
 
   res.render('users/show', {
@@ -263,7 +260,7 @@ exports.show = (req, res) => {
  * @param {object} res - the response object
  * @returns {func} Returns the user details back
  */
-exports.me = (req, res) => {
+const me = (req, res) => {
   res.jsonp(req.user || null);
 };
 
@@ -275,7 +272,7 @@ exports.me = (req, res) => {
  * @param {number} id - the ID of the user to be found
  * @returns {func} Returns the found user
  */
-exports.user = (req, res, next, id) => {
+const user = (req, res, next, id) => {
   User
     .findOne({
       _id: id
@@ -286,4 +283,72 @@ exports.user = (req, res, next, id) => {
       req.profile = user;
       next();
     });
+};
+
+const searchUser = (req, res) => {
+  const searchQuery = req.params.username;
+  if (searchQuery === '') {
+    return res.status(400).json({
+      message: 'Enter a value'
+    });
+  }
+  User.find({ name: searchQuery }).exec((error, users) => {
+    if (error) {
+      return res.status(500).json(error);
+    }
+    if (users.length === 0) {
+      return res.status(404).json({
+        message: 'No user found'
+      });
+    }
+    return res.status(200).json({ user: users[0].name, email: users[0].email });
+  });
+};
+// invite user function
+const inviteUser = (req, res) => {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD
+    }
+  });
+  const mailOptions = {
+    from: 'CFH Kenya-33',
+    to: req.body.recipient,
+    subject: 'Invitation to join a session of cfh',
+    text: `Your friend, CFH Kenya-33 has invited you to join the game, 
+    Card for Humanity. Click the link to join game: ${req.body.gameLink}`,
+    html: `<b>Your friend, CFH Kenya-33 has invited you to join the game, 
+    Card for Humanity. Click the link to join game: ${req.body.gameLink}</b>`
+  };
+
+  transporter.sendMail(mailOptions, (error) => {
+    if (error) {
+      res.status(500).json({
+        message: 'An error occured while trying to send your email invite'
+      });
+    } else {
+      res.status(200).json({
+        message: 'Email invite sent successfully'
+      });
+    }
+  });
+};
+export {
+  authCallback,
+  signin,
+  signup,
+  signout,
+  session,
+  checkAvatar,
+  avatar,
+  create,
+  login,
+  addDonation,
+  show,
+  me,
+  user,
+  searchUser,
+  inviteUser
 };
