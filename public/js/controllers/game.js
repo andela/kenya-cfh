@@ -13,7 +13,15 @@ angular.module('mean.system').controller('GameController', [
     $scope.pickedCards = [];
     let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
+
+    $scope.sound = (sound) => {
+      const gameSound = new Audio();
+      gameSound.src = `sound/${sound}`;
+      gameSound.play();
+    };
+
     $scope.pickCard = (card) => {
+      $scope.sound('sound.mp3');
       if (!$scope.hasPickedCards) {
         if ($scope.pickedCards.indexOf(card.id) < 0) {
           $scope.pickedCards.push(card.id);
@@ -107,6 +115,7 @@ angular.module('mean.system').controller('GameController', [
 
     $scope.pickWinning = (winningSet) => {
       if ($scope.isCzar()) {
+        $scope.sound('SUCCESSPICKUP.wav');
         game.pickWinning(winningSet.card[0]);
         $scope.winningCardPicked = true;
       }
@@ -119,6 +128,7 @@ angular.module('mean.system').controller('GameController', [
     };
 
     $scope.startNextGameRound = () => {
+      $scope.sound('czarsound.mp3');
       game.startNextGameRound();
     };
 
@@ -126,6 +136,7 @@ angular.module('mean.system').controller('GameController', [
       game.leaveGame();
       $location.path('/');
     };
+
     $scope.$watch('game.round', () => {
       $scope.hasPickedCards = false;
       $scope.showTable = false;
@@ -144,11 +155,14 @@ angular.module('mean.system').controller('GameController', [
       ) {
         $scope.showTable = true;
       }
-      if (
-        $scope.isCzar() &&
-        game.state === 'czar pick card' &&
-        game.table.length === 0
-      ) {
+
+      if ($scope.game.state === 'game ended'
+      && $scope.game.gameWinner === $scope.game.playerIndex) {
+        $scope.sound('crowdapplause1.mp3');
+      }
+
+      if ($scope.isCzar() && game.state === 'czar pick card'
+      && game.table.length === 0) {
         $('#myModal').modal('show');
       } else {
         $('.modal-close').trigger('click');
@@ -167,14 +181,12 @@ angular.module('mean.system').controller('GameController', [
               const txt = `Give the following link to your friends 
                            so they can join your game: `;
               $('#lobby-how-to-play').text(txt);
-              $('#oh-el')
-                .css({
-                  'text-align': 'center',
-                  'font-size': '22px',
-                  background: 'white',
-                  color: 'black'
-                })
-                .text(link);
+              $('#oh-el').css({
+                'text-align': 'center',
+                'font-size': '22px',
+                background: 'white',
+                color: 'black'
+              }).text(link);
             }, 200);
             $scope.modalShown = true;
           }
