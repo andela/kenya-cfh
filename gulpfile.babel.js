@@ -9,22 +9,22 @@ import nodemon from 'gulp-nodemon';
 import babel from 'gulp-babel';
 
 gulp.task('bower', () => {
-    bower().pipe(gulp.dest('./bower_components'));
-  });
+  bower().pipe(gulp.dest('./bower_components'));
+});
 
 gulp.task('sass', () => {
-    return gulp.src(['public/css/common.scss'])
-        .pipe(sass())
-        .pipe(gulp.dest('public/css/'))
+  return gulp.src(['public/css/common.scss'])
+    .pipe(sass())
+    .pipe(gulp.dest('public/css/'))
 });
 
 gulp.task('watch', () => {
-    gulp.watch('public/css/creative.min.css', ['sass']);
-    gulp.watch('public/css/**', browserSync.reload());
-    gulp.watch('app/views/**', browserSync.reload());
-    gulp.watch('public/js/**', browserSync.reload());
-    gulp.watch('app/**/*.js', browserSync.reload());
-    gulp.watch('public/views/**', browserSync.reload());
+  gulp.watch('public/css/creative.min.css', ['sass']);
+  gulp.watch('public/css/**', browserSync.reload());
+  gulp.watch('app/views/**', browserSync.reload());
+  gulp.watch('public/js/**', browserSync.reload());
+  gulp.watch('app/**/*.js', browserSync.reload());
+  gulp.watch('public/views/**', browserSync.reload());
 }); 
 
 gulp.task('babel', () => {
@@ -35,44 +35,44 @@ gulp.task('babel', () => {
 });
 
 gulp.task('eslint', () => {
-    gulp.src(['gulpfile.babel.js',
-        'public/js/**/*.js',
-        'test/**/*.js',
-        'app/**/*.js',
-        'config/**/*.js'
-      ])
-      .pipe(eslint());
-  });
+  gulp.src(['gulpfile.babel.js',
+    'public/js/**/*.js',
+    'test/**/*.js',
+    'app/**/*.js',
+    'config/**/*.js'
+  ])
+    .pipe(eslint());
+});
   
 gulp.task('angular', () => {
-    gulp.src('bower_components/angular/**/*.js')
-      .pipe(gulp.dest('./dist/public/lib/angular'));
-  });
+  gulp.src('bower_components/angular/**/*.js')
+    .pipe(gulp.dest('./dist/public/lib/angular'));
+});
 
 gulp.task('angular-bootstrap', () => {
-    gulp.src('bower_components/angular-bootstrap/**/*')
-      .pipe(gulp.dest('./dist/public/lib/angular-bootstrap'));
-  });
+  gulp.src('bower_components/angular-bootstrap/**/*')
+    .pipe(gulp.dest('./dist/public/lib/angular-bootstrap'));
+});
   
 gulp.task('bootstrap', () => {
-    gulp.src('bower_components/bootstrap/dist/**/*')
-      .pipe(gulp.dest('./dist/public/lib/bootstrap'));
-  });
+  gulp.src('bower_components/bootstrap/dist/**/*')
+    .pipe(gulp.dest('./dist/public/lib/bootstrap'));
+});
   
 gulp.task('jquery', () => {
-    gulp.src('bower_components/jquery/**/*')
-      .pipe(gulp.dest('./dist/public/lib/jquery'));
-  });
+  gulp.src('bower_components/jquery/**/*')
+    .pipe(gulp.dest('./dist/public/lib/jquery'));
+});
 
-  gulp.task('underscore', () => {
-    gulp.src('bower_components/underscore/**/*')
-      .pipe(gulp.dest('./dist/public/lib/underscore'));
-  });
+gulp.task('underscore', () => {
+  gulp.src('bower_components/underscore/**/*')
+    .pipe(gulp.dest('./dist/public/lib/underscore'));
+});
   
 gulp.task('angularUtils', () => {
-    gulp.src('bower_components/angular-ui-utils/modules/route/route.js')
-      .pipe(gulp.dest('./dist/public/lib/angular-ui-utils/modules'));
-  });
+  gulp.src('bower_components/angular-ui-utils/modules/route/route.js')
+    .pipe(gulp.dest('./dist/public/lib/angular-ui-utils/modules'));
+});
 
 gulp.task('transfer-jade', () => {
   gulp.src('app/views/**/*')
@@ -89,16 +89,21 @@ gulp.task('transfer-public', ['sass'], () => {
     .pipe(gulp.dest('./dist/public'));
 });
 
-gulp.task('transfer-bower', ['jquery', 'angular', 'bootstrap', 'angularUtils', 'underscore', 'angular-bootstrap']);
+gulp.task('intro.js', () => {
+  gulp.src('bower_components/introjs/**/*')
+    .pipe(gulp.dest('./public/lib/introjs'));
+});
+
+gulp.task('transfer-bower', ['jquery', 'angular', 'bootstrap', 'angularUtils', 'underscore', 'angular-bootstrap', 'intro.js']);
   
 gulp.task('mochaTest', () => {
-    gulp.src('./dist/test/**/*.js')
-      .pipe(mocha({
-        reporter: 'spec',
-        timeout: '500000'
-      }))
-      .pipe(exit());
-  });
+  gulp.src('./dist/test/**/*.js')
+    .pipe(mocha({
+      reporter: 'spec',
+      timeout: '500000'
+    }))
+    .pipe(exit());
+});
 
 
 gulp.task('nodemon', () => {
@@ -113,6 +118,7 @@ gulp.task('nodemon', () => {
     }
   });
 });
+
 
 gulp.task('install', ['bower']);
 
