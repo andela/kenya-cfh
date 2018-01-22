@@ -6,6 +6,7 @@
     "es6": true,
     "mocha": true
   },
+  
   "rules": {
     "max-len": [
       2,
@@ -66,6 +67,7 @@
     "localStorage": true,
     "window": true,
     "$": true,
-    "document": true
+    "document": true,
+    "Audio": true
   }
 }
