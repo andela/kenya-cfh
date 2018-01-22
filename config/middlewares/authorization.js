@@ -7,11 +7,11 @@ const { secret } = config;
  * Generic require login routing middleware
  * @export
  *
- * @param {any} req request sent from the body
- * @param {any} res response sent to the body
- * @param {any} next calls the next function
+ * @param {Object} req request sent from the body
+ * @param {Object} res response sent to the body
+ * @param {Object} next calls the next function
  *
- * @returns {object} response object
+ * @returns {Object} response object
  */
 export function requiresLogin(req, res, next) {
   const token = req.body.token || req.headers['x-token'] || req.headers.token;
@@ -27,7 +27,7 @@ export function requiresLogin(req, res, next) {
       }
     });
   } else {
-    res.status(403).send({
+    res.status(401).send({
       message: 'Token not provided'
     });
   }

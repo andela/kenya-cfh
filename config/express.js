@@ -21,7 +21,7 @@ export default (app, passport, mongoose) => {
 
   // Setting the fav icon and static folder
   app.use(express.favicon());
-  app.use(express.static(config.root + '/public'));
+  app.use(express.static(`${config.root}/public`));
 
   // Don't use logger for test env
   if (process.env.NODE_ENV !== 'test') {
@@ -29,7 +29,7 @@ export default (app, passport, mongoose) => {
   }
 
   // Set views path, template engine and default layout
-  app.set('views', config.root + '/app/views');
+  app.set('views', `${config.root}/app/views`);
   app.set('view engine', 'jade');
 
   // Enable jsonp
@@ -45,7 +45,7 @@ export default (app, passport, mongoose) => {
 
     // express/mongo session storage
     app.use(express.session({
-      secret: 'MEAN',
+      secret: config.expressKey,
       store: new mongoStore({
         url: config.db,
         collection: 'sessions',

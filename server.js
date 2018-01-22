@@ -7,11 +7,11 @@ dotenv.config();
 /**
  * Module dependencies.
  */
-const express = require('express'),
-  fs = require('fs'),
-  passport = require('passport'),
-  logger = require('mean-logger'),
-  io = require('socket.io');
+const express = require('express');
+const fs = require('fs');
+const passport = require('passport');
+const logger = require('mean-logger');
+const io = require('socket.io');
 
 /**
  * Main application entry file.
@@ -20,22 +20,23 @@ const express = require('express'),
 
 // Load configurations
 // if test env, load example file
-const env = process.env.NODE_ENV || 'development',
-  auth = require('./config/middlewares/authorization'),
-  mongoose = require('mongoose');
+const auth = require('./config/middlewares/authorization');
+const mongoose = require('mongoose');
 
 // Bootstrap db connection
-const db = mongoose.connect(config.db, {
+mongoose.connect(config.db, {
   useMongoClient: true
 });
 
 // Bootstrap models
-const modelsPath = __dirname + '/app/models';
+const modelsPath = `${__dirname}/app/models`;
 const walk = (path) => {
   fs.readdirSync(path).forEach((file) => {
-    const newPath = path + '/' + file;
+    const newPath = `${path}/${file}`;
     const stat = fs.statSync(newPath);
     if (stat.isFile()) {
+      /* eslint-disable import/no-dynamic-require */
+      /* eslint-disable global-require */
       if (/(.*)\.(js|coffee)/.test(file)) {
         require(newPath);
       }

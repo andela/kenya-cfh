@@ -49,7 +49,7 @@ describe('Create game using authenticated route', () => {
       });
   });
   it(
-    'should return 201 status code for successfully creating a game log',
+    'should return 201 status code and game winner for successfully creating a game log',
     (done) => {
       server
         .post(gameUrl)
@@ -61,6 +61,7 @@ describe('Create game using authenticated route', () => {
         .send(gameData)
         .end((err, res) => {
           expect(res.body.message).to.equal('Game successfully logged');
+          expect(res.body.gameLog.gameWinner).to.equal(gameData.gameWinner);
           expect(res.status).to.equal(201);
           if (err) return done(err);
           done();
@@ -69,7 +70,7 @@ describe('Create game using authenticated route', () => {
   );
 
   it(
-    'should return 403 status code and not create a game when token is not provided',
+    'should return error message and not create a game when token is not provided',
     (done) => {
       server
         .post(gameUrl)
@@ -79,7 +80,7 @@ describe('Create game using authenticated route', () => {
         .send(gameData)
         .end((err, res) => {
           expect(res.body.message).to.equal('Token not provided');
-          expect(res.status).to.equal(403);
+          expect(res.status).to.equal(401);
           if (err) return done(err);
           done();
         });
@@ -87,7 +88,7 @@ describe('Create game using authenticated route', () => {
   );
 
   it(
-    'should return 401 status code and not create a game when token is expired',
+    'should return error message and not create a game when token is expired',
     (done) => {
       server
         .post(gameUrl)
