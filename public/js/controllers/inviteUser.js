@@ -27,6 +27,7 @@ angular.module('mean.system')
           setTimeout(() => {
             $scope.userNotFound = false;
           }, 2000);
+          return error;
         });
       } else {
         $scope.searchResult = [];

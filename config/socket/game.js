@@ -151,9 +151,8 @@ class Game {
         this.getAnswers
       ],
       (err, results) => {
-        self.questions = results[0].filter(question =>
-          question.regionId === self.regionId);
-        [self.answers] = results;
+        [self.questions] = results;
+        [, self.answers] = results;
 
         self.startGame();
       }
@@ -288,7 +287,7 @@ class Game {
   getQuestions(callback) {
     questions.allQuestionsForGame((allQuestions) => {
       callback(null, allQuestions);
-    });
+    }, this.regionId);
   }
 
   /**

@@ -14,6 +14,16 @@ angular.module('mean.system').controller('IndexController', [
       $location.path('/app');
     };
 
+    $scope.selectRegionToPlayAsGuest = () => {
+      $scope.gameMode = 'guest';
+      $('#selectRegion').modal();
+    };
+
+    $scope.selectRegionToPlayWithFriends = () => {
+      $scope.gameMode = 'friends';
+      $('#selectRegion').modal();
+    };
+
     $scope.showError = () => {
       if ($location.search().error) {
         return $location.search().error;
@@ -30,16 +40,13 @@ angular.module('mean.system').controller('IndexController', [
       }
       return false;
     };
-    $scope.playGameAsGuest = () => {
-      $scope.gameMode = 'guest';
-      $('#selectRegion').modal();
-    };
 
-    $scope.selectedRegion = '1';
+    $scope.selectedRegion = '59b90186ad7d37a9fb7d3630';
 
     $scope.startGameForRegion = () => {
       localStorage.setItem('selectedRegion', $scope.selectedRegion);
-      window.location.href = `/play${$scope.gameMode === 'friends' ? '?custom' : ''}`;
+      window.location.href =
+      `/play${$scope.gameMode === 'friends' ? '?custom' : ''}`;
     };
     $scope.showOptions();
 
@@ -50,9 +57,5 @@ angular.module('mean.system').controller('IndexController', [
     };
 
     $scope.avatars = [];
-    AvatarService.getAvatars()
-      .then((data) => {
-        $scope.avatars = data;
-      });
   }
 ]);

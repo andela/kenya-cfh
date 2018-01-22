@@ -3,9 +3,6 @@
  */
 import mongoose, { Schema } from 'mongoose';
 
-const config = require('../../config/config');
-
-
 /**
  * Question Schema
  */
@@ -24,6 +21,7 @@ const QuestionSchema = new Schema({
   official: {
     type: Boolean
   },
+  regionId: String,
   expansion: {
     type: String,
     default: '',

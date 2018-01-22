@@ -35,7 +35,7 @@ module.exports = (app, passport) => {
   app.post('/users/avatars', avatar);
   app.post('/api/auth/login', create);
   app.get('/api/search', searchUser);
- app.post('/api/users/invite', inviteUser);
+  app.post('/api/users/invite', inviteUser);
 
   // Donation Routes
   app.post('/donations', addDonation);
