@@ -63,7 +63,7 @@
                         <a class="page-scroll" href="/#!/signin">SIGN IN</a>
                     </li>
                     <li ng-hide="showOptions">
-                        <a ng-click="signOut()">SIGN OUT</a>
+                        <a href="" ng-click="signOut()">SIGN OUT</a>
                     </li>
                 </ul>
             </div>
@@ -90,11 +90,11 @@
                         <a href="/play">PLAY AS GUEST</a>
                     </button>
 
-                    <button type="submit" id="sign-up-btn-landing" ng-hide="showOptions">
-                        <a href="/play">PLAY WITH STRANGERS</a>
-                    </button>
-                    <button type="submit" id="sign-up-btn-landing" ng-hide="showOptions">
+                    <button class="play-with" type="submit" id="sign-up-btn-landing" ng-hide="showOptions">
                         <a href="/play">PLAY WITH FRIENDS</a>
+                    </button>
+                    <button class="play-with" type="submit" id="sign-up-btn-landing" ng-hide="showOptions">
+                        <a href="/play">PLAY WITH OTHERS</a>
                     </button>
 
                 </div>
