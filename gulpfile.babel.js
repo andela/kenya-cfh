@@ -74,6 +74,11 @@ gulp.task('angularUtils', () => {
       .pipe(gulp.dest('./dist/public/lib/angular-ui-utils/modules'));
   });
 
+gulp.task('emojionearea', () => {
+    gulp.src('bower_components/emojionearea/dist/**/*')
+      .pipe(gulp.dest('./dist/public/lib/emojionearea'));
+});
+
 gulp.task('transfer-jade', () => {
   gulp.src('app/views/**/*')
     .pipe(gulp.dest('./dist/app/views'));
@@ -116,7 +121,7 @@ gulp.task('nodemon', () => {
 
 gulp.task('install', ['bower']);
 
-gulp.task('build', ['sass', 'transfer-public', 'babel', 'transfer-json', 'transfer-jade', 'transfer-bower']);
+gulp.task('build', ['sass', 'transfer-public', 'babel', 'transfer-json', 'transfer-jade', 'transfer-bower', 'emojionearea']);
 
 gulp.task('test', ['mochaTest']);
 
