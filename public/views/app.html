@@ -117,6 +117,62 @@
     <div class="col-sm-12 col-lg-3">
     </div>
 
+    <div id="startModal" class="modal fade" role="dialog">  
+      <div class="modal-dialog"> 
+        <div class="modal-content"> 
+          <div class="modal-header mod-title"> 
+            <h4 class="modal-title">GAME CONFIRMATION</h4> 
+          </div> 
+          <div class="modal-body mod-body"> 
+            <div class="row"> 
+              <div class="col-md-12" id="modal-text"> 
+                <p>Are you sure you want to start the game? </p> 
+              </div> 
+              <div class="col-md-3 col-md-offset-3"> 
+                <button ng-click="startGame()" data-dismiss="modal" type="button" id="mod-btn" class="btn btn-block mod-btn"> 
+                  Yes, Start! 
+                </button> 
+              </div> 
+              <div class="col-md-3"> 
+                <button type="button" class="btn btn-block mod-btn" id="mod-btn" data-dismiss="modal"> 
+                  No, Return! 
+                </button> 
+              </div> 
+            </div> 
+          </div> 
+        </div> 
+      </div> 
+    </div> 
+
+    <div id="few-players-modal" class="modal fade" role="dialog">  
+      <div class="modal-dialog">  
+        <div class="modal-content">  
+          <div class="modal-header mod-title">  
+            <h4 class="modal-title">GAME NOTIFICATION</h4>  
+            <button type="button" id="icon-btn" class="close" data-dismiss="modal">&times;</button>  
+          </div>  
+          <div class="modal-body" id="modal-text">  
+            <p>The minimum number of players to play this game is three (3)!<br /> Invite more friends</p>  
+          </div>  
+      </div>  
+    </div>  
+     
+    <div class="modal fade" id="gameFilledUp" role="dialog"> 
+      <div class="modal-dialog"> 
+        <div class="modal-content"> 
+          <div class="modal-header mod-title"> 
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+            <h4 class="modal-title">Game FIlled Up</h4> 
+          </div> 
+          <div class="modal-body"> 
+            <p>Maximum number of players reached</p> 
+          </div> 
+          <div class="modal-footer"> 
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+          </div> 
+        </div> 
+      </div> 
+   </div>
 
 
   </section>

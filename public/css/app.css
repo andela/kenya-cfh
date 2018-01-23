@@ -20,6 +20,42 @@ html {
 body {
   background-color: transparent !important;
 }
+
+.mod-title{ 
+  background-color: #150366c2; 
+} 
+ 
+#mod-btn { 
+  background-color: #4b428b; 
+  color: white; 
+  border-radius: 3px; 
+  padding: 10px 15px; 
+  margin-bottom: 5px; 
+  cursor: pointer; 
+  font-size: 18px; 
+  -webkit-transition-duration: 0.25s; 
+  transition-duration: 0.25s; 
+} 
+ 
+#icon-btn{ 
+  color: #fff; 
+} 
+ 
+#mod-btn:hover { 
+  color: white !important; 
+  font-weight: bold !important; 
+  font-size: 23px !important; 
+} 
+ 
+#modal-text { 
+  color: black; 
+  font-size: 18px; 
+} 
+ 
+.mod-body { 
+  background-color: rgba(255, 255, 255, 0.226) !important; 
+}
+
 #main-banner {
   margin: 0px;
   position: relative;
