@@ -52,7 +52,7 @@ class Game {
     this.curQuestion = null;
     this.regionId = DEFAULT_REGION_ID;
     this.timeLimits = {
-      sstateChoosing: STATE_CHOOSING_TIME_LIMITS,
+      stateChoosing: STATE_CHOOSING_TIME_LIMITS,
       stateJudging: STATE_JUDGING_TIME_LIMITS,
       stateResults: STATE_RESULT_TIME_LIMIT
     };
@@ -134,7 +134,7 @@ class Game {
   /**
    * @returns {void} prepareGame
    */
-  prepareGame() {
+  prepareGame = () => {
     this.state = 'game in progress';
 
     this.io.sockets.in(this.gameID).emit('prepareGame', {
@@ -292,10 +292,11 @@ class Game {
    * @param {function} callback
    * @returns {void} getQuestions
    */
-  getQuestions(callback) {
+  getQuestions = (callback) => {
+    const { regionId } = this;
     questions.allQuestionsForGame((allQuestions) => {
       callback(null, allQuestions);
-    }, this.regionId);
+    }, regionId);
   }
 
   /**

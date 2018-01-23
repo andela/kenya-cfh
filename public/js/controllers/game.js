@@ -138,6 +138,7 @@ angular.module('mean.system').controller('GameController', [
     });
 
     $scope.$watch('game.state', () => {
+      
       if (
         game.state === 'waiting for czar to decide' &&
         $scope.showTable === false
