@@ -32,15 +32,15 @@ module.exports = (io) => {
         isUniqueRoom = true;
       }
     }
-    const thisgame = new Game(uniqueRoom, io);
+    game = new Game(uniqueRoom, io);
     allPlayers[socket.id] = true;
-    thisgame.players.push(player);
-    allGames[uniqueRoom] = thisgame;
+    game.players.push(player);
+    allGames[uniqueRoom] = game;
     socket.join(game.gameID);
     socket.gameID = game.gameID;
-    thisgame.assignPlayerColors();
-    thisgame.assignGuestNames();
-    thisgame.sendUpdate();
+    game.assignPlayerColors();
+    game.assignGuestNames();
+    game.sendUpdate();
   };
 
   const exitGame = (socket) => {

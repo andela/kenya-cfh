@@ -153,11 +153,23 @@ angular.module("mean.system").controller("GameController", [
       ) {
         $scope.showTable = true;
       }
+
+      if($scope.game.state === 'game ended'
+      && $scope.game.gameWinner === $scope.game.playerIndex) {
+        const sound = new Audio();
+        sound.src = "sound/crowdapplause1.mp3";
+        sound.play();
+      }
+
       if (
         $scope.isCzar() &&
         game.state === "czar pick card" &&
         game.table.length === 0
       ) {
+        $('#myModal').modal({
+          keyboard: false,
+          backdrop: 'static'
+        });
         $("#myModal").modal("show");
       } else {
         $(".modal-close").trigger("click");
