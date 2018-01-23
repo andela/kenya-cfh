@@ -1,10 +1,8 @@
+import Question from '../models/question';
 /**
  * Module dependencies.
  */
 /* eslint-disable no-shadow */
-import mongoose from 'mongoose';
-
-const Question = mongoose.model('Question');
 
 
 /**
@@ -34,7 +32,7 @@ export const question = (req, res, next, id) => {
  *
  * @return {void} question
  */
-export const show = (req, res) => {
+export const showQuestion = (req, res) => {
   res.jsonp(req.question);
 };
 

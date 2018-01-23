@@ -38,4 +38,4 @@ AnswerSchema.statics = {
     }
 };
 
-mongoose.model('Answer', AnswerSchema);
+export default mongoose.model('Answer', AnswerSchema);

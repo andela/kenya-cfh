@@ -1,10 +1,10 @@
+import Answer from '../models/answer';
+
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-    async = require('async'),
-    Answer = mongoose.model('Answer'),
-    _ = require('underscore');
+
+const _ = require('underscore');
 
 
 /**
