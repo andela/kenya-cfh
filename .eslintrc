@@ -67,6 +67,7 @@
     "localStorage": true,
     "window": true,
     "$": true,
-    "document": true
+    "document": true,
+    "Firebase":true
   }
 }

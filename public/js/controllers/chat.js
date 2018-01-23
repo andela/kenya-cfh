@@ -4,7 +4,7 @@ angular.module('mean.system').controller('Chat', [
   'game',
   ($scope, $firebaseArray, game) => {
     const ref
-    = new Firebase(`https://cfh-chat-4121e.firebaseio.com/${game.gameID}`);
+      = new Firebase(`https://cfh-chat-4121e.firebaseio.com/${game.gameID}`);
     $scope.chatMessages = $firebaseArray(ref);
     $scope.message = '';
     $scope.newMessage = '';
@@ -18,7 +18,7 @@ angular.module('mean.system').controller('Chat', [
         newMessageCount = $scope.chatMessages.length;
         unreadMessageCount = newMessageCount - previousMessageCount;
         $scope.unreadMessageCount
-        = unreadMessageCount <= 0 ? null : unreadMessageCount;
+          = unreadMessageCount <= 0 ? null : unreadMessageCount;
       } else {
         previousMessageCount = $scope.chatMessages.length;
         $scope.unreadMessageCount = null;
@@ -50,5 +50,25 @@ angular.module('mean.system').controller('Chat', [
         $scope.message = '';
       }
     };
+
+    $(document).ready(() => {
+      const emoji = $('#btn-input').emojioneArea({
+        autoHideFilters: true,
+        pickerPosition: 'top',
+        recentEmojis: true,
+        placeholder: 'Type a message',
+        events: {
+          keyup: (editor, event) => {
+            if (event.which === 13) {
+              $scope.message = emoji.data('emojioneArea').getText();
+              emoji.data('emojioneArea').setText('');
+              $scope.forwardMessage(event);
+            } else {
+              $scope.message = emoji.data('emojioneArea').getText();
+            }
+          }
+        }
+      });
+    });
   }
 ]);
