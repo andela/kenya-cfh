@@ -313,3 +313,7 @@ card.smallest {
   vertical-align: top;
   letter-spacing: 2px;
 }
+
+.introjs-tooltiptext {
+  color: black !important;
+}
