@@ -150,6 +150,10 @@ angular.module('mean.system').controller('GameController', [
         game.state === 'czar pick card' &&
         game.table.length === 0
       ) {
+        $('#myModal').modal({
+          keyboard: false,
+          backdrop: 'static'
+        });
         $('#myModal').modal('show');
       } else {
         $('.modal-close').trigger('click');
