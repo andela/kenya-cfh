@@ -17,6 +17,7 @@
 </head>
 
 <body>
+<div  ng-controller="GameController" ng-init="startGameTour()">
   <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -28,10 +29,10 @@
         <a class="navbar-brand page-scroll" href="#page-top" style="color: red;">CARDS FOR HUMANITY</a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="collapse navbar-collapse" id="abandon-game-button">
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a class="page-scroll" href="/">TAKE A TOUR</a>
+            <a class="page-scroll" ng-click="retakeTour()" href="javascript:;">TAKE A TOUR</a>
           </li>
           <li>
             <a class="page-scroll" href="/">ABANDON GAME</a>
@@ -42,7 +43,7 @@
     </div>
     <!-- /.container-fluid -->
   </nav>
-  <section id="main-banner" class="container" ng-controller="GameController">
+  <section id="main-banner" class="container">
     <div class="modal fade" id="myModal" style="background-color:#381c5f9c" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content" style="background-color:rgba(255, 255, 255, 0.568)">
@@ -86,13 +87,15 @@
             <timer></timer>
           </div>
           <div class="col-md-9 col-sm-9 col-xs-9 col-lg-9 game">
-            <question></question>
+              <div id ="question-container-outer">
+                  <question></question>
+              </div>
 
 
 
             <div class="row game-row">
               <div class="cards">
-                <div class="col-lg-12 game longspan info-container">
+                <div id = "answers-container" class="col-lg-12 game longspan info-container">
                   <answers></answers>
                 </div>
               </div>
@@ -174,6 +177,7 @@
       </div>
    </div>
   </section>
+  </div>
 </body>
 
 </html>
