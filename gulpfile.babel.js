@@ -42,6 +42,9 @@ gulp.task('eslint', () => {
   ])
     .pipe(eslint());
 });
+gulp.task('sass', () => gulp.src(['public/css/common.scss'])
+  .pipe(sass())
+  .pipe(gulp.dest('public/css/')));
 
 gulp.task('angular', () => {
   gulp.src('bower_components/angular/**/*.js')
@@ -93,8 +96,13 @@ gulp.task('transfer-public', ['sass'], () => {
     .pipe(gulp.dest('./dist/public'));
 });
 
-gulp.task('transfer-bower', ['jquery', 'angular', 'bootstrap', 'angularUtils',
-  'underscore', 'angular-bootstrap', 'emojionearea']);
+gulp.task('intro.js', () => {
+  gulp.src('bower_components/introjs/**/*')
+    .pipe(gulp.dest('./public/lib/introjs'));
+});
+
+gulp.task('transfer-bower', ['jquery', 'angular', 'bootstrap',
+  'angularUtils', 'underscore', 'angular-bootstrap', 'intro.js']);
 gulp.task('mochaTest', () => {
   gulp.src('./dist/test/**/*.js')
     .pipe(mocha({
@@ -122,6 +130,7 @@ gulp.task('install', ['bower']);
 
 gulp.task('build', ['sass', 'transfer-public', 'babel', 'transfer-json',
   'transfer-jade', 'transfer-bower']);
+
 
 gulp.task('test', ['mochaTest']);
 

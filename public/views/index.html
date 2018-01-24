@@ -1,3 +1,5 @@
+Index.html
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -104,12 +106,14 @@
                         <div class="modal-content">
                             <div class="modal-header container-fluid" style="background-color:blueviolet; color:white;">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true" style="color:white;">&times;</span>
+                                    <span aria-hidden="true" style = "color:white; 
+                                        z-index:10; float: right;">Close</span>
                                 </button>
-                                <h4 class="modal-title" id="myModalLabel">Select a region</h4>
+                                
+                                <h4 class="modal-title" id="myModalLabel" style = "float:left;">Select a region</h4>
+                                                                
                             </div>
                             <div class="modal-body" style="padding:10px;">
-                                <p></p>p></p>
                                 <select ng-model="selectedRegion" class="form-control">
                                     <option value="59b90186ad7d37a9fb7d3630">Africa</option>
                                     <option value="59b8ffde28650f1362ca5941">America</option>

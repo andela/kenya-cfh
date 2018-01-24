@@ -209,6 +209,53 @@ angular.module('mean.system').controller('GameController', [
         }
       }
     });
+    $scope.gameTour = introJs();
+
+    $scope.gameTour.setOptions({
+      steps: [{
+        intro: 'Welcome to cards for humanity (the coolest people call it ' +
+        'CFH). You want to play this game ? Then let me take you on a ' +
+        'quick tour'
+      },
+
+      {
+        element: '#question-container-outer',
+        intro: 'Game needs a minimum of 3 players to start. Wait for the ' +
+        'minimum number of players then start the game. Also when the game ' +
+        'starts, the questions are displayed here'
+      },
+      {
+        element: '#timer-container',
+        intro: 'You have 20 seconds to submit an answer. After time out, ' +
+        'the CZAR selects his favorite answer. Whoever submits CZAR\'s ' +
+        'favorite answer wins the round'
+      },
+      {
+        element: '#answers-container',
+        intro: 'These are the rules of the game',
+        position: 'top'
+      },
+      {
+        element: '#abandon-game-button',
+        intro: 'Played enough ? Click here to quit game'
+      }
+      ],
+      showStepNumbers: true,
+      disableInteraction: true,
+      overlayOpacity: 0.5,
+      showBullets: false
+    });
+
+    $scope.startGameTour = () => {
+      if (!localStorage.takenTour) {
+        $scope.gameTour.start();
+        localStorage.setItem('takenTour', true);
+      }
+    };
+
+    $scope.retakeTour = () => {
+      $scope.gameTour.start();
+    };
 
     if ($location.search().game && !/^\d+$/.test($location.search().game)) {
       game.joinGame('joinGame', $location.search().game);
