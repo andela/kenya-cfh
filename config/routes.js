@@ -7,6 +7,7 @@ import {
   checkAvatar,
   avatar,
   create,
+  login,
   searchUser,
   inviteUser,
   addDonation,
@@ -32,7 +33,7 @@ export default (app, passport) => {
   // Setting up the users api
   app.post('/api/auth/signup', create);
   app.post('/users/avatars', avatar);
-  app.post('/api/auth/login', create);
+  app.post('/api/auth/login', login);
   app.get('/api/search', searchUser);
   app.post('/api/users/invite', inviteUser);
 

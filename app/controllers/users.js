@@ -81,7 +81,7 @@ const checkAvatar = (req, res) => {
         if (user.avatar !== undefined) {
           res.redirect('/#!/');
         } else {
-          res.redirect('/#!/choose-avatar');
+          res.redirect('/#!/');
         }
       });
   } else {
@@ -218,7 +218,7 @@ const addDonation = (req, res) => {
         _id: req.user._id
       })
         .exec((err, user) => {
-        // Confirm that this object hasn't already been entered
+          // Confirm that this object hasn't already been entered
           let duplicate = false;
           for (let i = 0; i < user.donations.length; i += 1) {
             if (user

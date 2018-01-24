@@ -133,6 +133,7 @@ li {
 }
 .cards.players-layout {
   display: inline-block;
+  width: 240px;
 }
 .cards .card-content {
   border-radius: 2px 2px 2px 2px;
