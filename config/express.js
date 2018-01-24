@@ -57,7 +57,7 @@ export default (app, passport, mongoose) => {
     app.use(flash());
 
     // dynamic helpers
-    app.use(helpers(config.app.name));
+    app.use(helpers(config.default.app.name));
 
     // use passport session
     app.use(passport.initialize());
@@ -69,7 +69,7 @@ export default (app, passport, mongoose) => {
     // Assume "not found" in the error msgs is a 404. this is somewhat silly, but valid, you can do whatever you like, set properties, use instanceof etc.
     app.use((err, req, res, next) => {
       // Treat as 404
-      if (~err.message.indexOf('not found')) return next();
+      if (err.message.indexOf('not found')) return next();
 
       // Error page
       res.status(500).render('500', {

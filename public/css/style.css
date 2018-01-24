@@ -15,6 +15,10 @@
    top: -65px;
 }
 
+.hovered{
+  cursor: pointer;
+}
+
 #tweet-container-index{
    margin-top: 10px;
    display: inline-block;
@@ -608,9 +612,6 @@
  }
 
  /**** Portfolio ****/
- .wpb-portfolio-body {
-
- }
 
  .wpb-portfolio-body .wpb-teaser {
    min-height: 350px;
@@ -765,8 +766,6 @@
 
 
  /**** Single Portfolio Item ****/
- .wpb-single-portfolio {
- }
 
  .wpb-single-portfolio .wpb-content-inner {
    padding: 0px;

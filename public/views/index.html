@@ -32,7 +32,7 @@
 <body id="page-top">
 
 
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top" ng-controller="IndexController">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top" ng-controller="AuthenticationController">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -63,7 +63,7 @@
                         <a class="page-scroll" href="/#!/signin">SIGN IN</a>
                     </li>
                     <li ng-hide="showOptions">
-                        <a href="" ng-click="signOut()">SIGN OUT</a>
+                        <a class="hovered" ng-click="signOut()">SIGN OUT</a>
                     </li>
                 </ul>
             </div>
@@ -102,14 +102,15 @@
                 <div class="modal fade" id="selectRegion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <div class="modal-header container-fluid" style="background-color:blueviolet; color:white;">
+                            <div class="modal-header container-fluid" style="background-color:#090538; color:white;">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true" style="color:white;">&times;</span>
+                                    <span aria-hidden="true" style="color:white;">CANCEL</span>
                                 </button>
                                 <h4 class="modal-title" id="myModalLabel">Select a region</h4>
                             </div>
                             <div class="modal-body" style="padding:10px;">
-                                <p></p>p></p>
+                                <p></p>
+                                </p>
                                 <select ng-model="selectedRegion" class="form-control">
                                     <option value="59b90186ad7d37a9fb7d3630">Africa</option>
                                     <option value="59b8ffde28650f1362ca5941">America</option>

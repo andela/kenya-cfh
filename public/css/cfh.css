@@ -365,3 +365,6 @@ button a:hover {
   font-size: 20px;
   font-weight: normal;
 }
+.hovered{
+  cursor: pointer;
+}
