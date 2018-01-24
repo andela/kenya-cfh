@@ -1,18 +1,17 @@
-
 import mongoose from 'mongoose';
+import * as avatars from '../../app/controllers/avatars';
 import Game from './game';
 import Player from './player';
+
 
 require('console-stamp')(console, 'm/dd HH:MM:ss');
 
 const DEFAULT_REGION = '59b90186ad7d37a9fb7d3630';
-
-const avatars = require(__dirname + '/../../app/controllers/avatars.js').all();
 const User = mongoose.model('User');
 
 const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxy';
 
-module.exports = (io) => {
+export default (io) => {
   let game;
   const allGames = {};
   const allPlayers = {};
@@ -35,19 +34,19 @@ module.exports = (io) => {
         isUniqueRoom = true;
       }
     }
-    const thisgame = new Game(uniqueRoom, io);
+    game = new Game(uniqueRoom, io);
     allPlayers[socket.id] = true;
-    thisgame.players.push(player);
-    allGames[uniqueRoom] = thisgame;
+    game.players.push(player);
+    allGames[uniqueRoom] = game;
     socket.join(game.gameID);
     socket.gameID = game.gameID;
-    thisgame.assignPlayerColors();
-    thisgame.assignGuestNames();
-    thisgame.sendUpdate();
+    game.assignPlayerColors();
+    game.assignGuestNames();
+    game.sendUpdate();
   };
 
   const exitGame = (socket) => {
-    if (allGames[socket.gameID]) { 
+    if (allGames[socket.gameID]) {
       const game = allGames[socket.gameID];
       delete allPlayers[socket.id];
       if (game.state === 'awaiting players' ||
@@ -67,31 +66,31 @@ module.exports = (io) => {
   };
 
   const fireGame = (player, socket) => {
-    let thisgame;
+    let game;
     if (gamesNeedingPlayers.length <= 0) {
       gameID += 1;
       const gameIDStr = gameID.toString();
-      thisgame = new Game(gameIDStr, io);
+      game = new Game(gameIDStr, io);
       allPlayers[socket.id] = true;
-      thisgame.players.push(player);
-      allGames[gameID] = thisgame;
-      gamesNeedingPlayers.push(thisgame);
-      socket.join(thisgame.gameID);
-      socket.gameID = thisgame.gameID;
-      thisgame.assignPlayerColors();
-      thisgame.assignGuestNames();
-      thisgame.sendUpdate();
+      game.players.push(player);
+      allGames[gameID] = game;
+      gamesNeedingPlayers.push(game);
+      socket.join(game.gameID);
+      socket.gameID = game.gameID;
+      game.assignPlayerColors();
+      game.assignGuestNames();
+      game.sendUpdate();
     } else {
-      [thisgame] = gamesNeedingPlayers;
+      [game] = gamesNeedingPlayers;
       allPlayers[socket.id] = true;
-      thisgame.players.push(player);
-      socket.join(thisgame.gameID);
-      socket.gameID = thisgame.gameID;
-      thisgame.assignPlayerColors();
-      thisgame.assignGuestNames();
-      thisgame.sendUpdate();
-      thisgame.sendNotification(`${player.username} has joined the game!`);
-      if (thisgame.players.length >= thisgame.playerMaxLimit) {
+      game.players.push(player);
+      socket.join(game.gameID);
+      socket.gameID = game.gameID;
+      game.assignPlayerColors();
+      game.assignGuestNames();
+      game.sendUpdate();
+      game.sendNotification(`${player.username} has joined the game!`);
+      if (game.players.length >= game.playerMaxLimit) {
         gamesNeedingPlayers.shift();
       }
     }
@@ -102,21 +101,21 @@ module.exports = (io) => {
     requestedGameId = requestedGameId || '';
     createPrivate = createPrivate || false;
     if (requestedGameId.length && allGames[requestedGameId]) {
-      const thisgame = allGames[requestedGameId];
+      const game = allGames[requestedGameId];
 
-      if (thisgame.state === 'awaiting players'
-      && (!thisgame.players.length ||
-      thisgame.players[0].socket.id !== socket.id)
-      && (game.players.length < game.playerMaxLimit)) {
+      if (game.state === 'awaiting players'
+        && (!game.players.length ||
+          game.players[0].socket.id !== socket.id)
+        && (game.players.length < game.playerMaxLimit)) {
         allPlayers[socket.id] = true;
-        thisgame.players.push(player);
-        socket.join(thisgame.gameID);
+        game.players.push(player);
+        socket.join(game.gameID);
         socket.gameID = game.gameID;
-        thisgame.assignPlayerColors();
-        thisgame.assignGuestNames();
-        thisgame.sendUpdate();
-        thisgame.sendNotification(`${player.username} has joined the game!`);
-        if (thisgame.players.length >= thisgame.playerMaxLimit) {
+        game.assignPlayerColors();
+        game.assignGuestNames();
+        game.sendUpdate();
+        game.sendNotification(`${player.username} has joined the game!`);
+        if (game.players.length >= game.playerMaxLimit) {
           gamesNeedingPlayers.shift();
         }
       } else {
@@ -148,7 +147,7 @@ module.exports = (io) => {
           player.username = user.name;
           player.premium = user.premium || 0;
           player.avatar = user.avatar
-          || avatars[Math.floor(Math.random() * 4) + 12];
+            || avatars[Math.floor(Math.random() * 4) + 12];
         }
         getGame(player, socket, gameData.room, gameData.createPrivate);
       });
@@ -187,16 +186,16 @@ module.exports = (io) => {
 
     socket.on('startGame', (data) => {
       if (allGames[socket.gameID]) {
-        const thisGame = allGames[socket.gameID];
-        thisGame.regionId = data.regionId || DEFAULT_REGION;
-        if (thisGame.players.length >= thisGame.playerMinLimit) {
+        const game = allGames[socket.gameID];
+        game.regionId = data.regionId || DEFAULT_REGION;
+        if (game.players.length >= game.playerMinLimit) {
           gamesNeedingPlayers.forEach((theGame, index) => {
             if (theGame.gameID === socket.gameID) {
               return gamesNeedingPlayers.splice(index, 1);
             }
           });
-          thisGame.prepareGame();
-          thisGame.sendNotification(`The game has begun, 
+          game.prepareGame();
+          game.sendNotification(`The game has begun, 
              wait for czar to draw cards`);
         }
       }

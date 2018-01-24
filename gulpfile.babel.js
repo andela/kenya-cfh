@@ -97,8 +97,8 @@ gulp.task('transfer-public', ['sass'], () => {
 });
 
 gulp.task('intro.js', () => {
-  gulp.src('bower_components/introjs/**/*')
-    .pipe(gulp.dest('./public/lib/introjs'));
+  gulp.src('bower_components/intro.js/**/*')
+    .pipe(gulp.dest('./public/lib/intro.js'));
 });
 
 gulp.task('transfer-bower', ['jquery', 'angular', 'bootstrap',

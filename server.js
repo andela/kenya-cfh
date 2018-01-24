@@ -1,18 +1,20 @@
-import dotenv from 'dotenv';
-import config from './config/config';
-import expressConfig from './config/express';
-import router from './config/routes';
-
-dotenv.config();
-
 /**
  * Module dependencies.
  */
-const express = require('express');
-const fs = require('fs');
-const passport = require('passport');
-const logger = require('mean-logger');
-const io = require('socket.io');
+import dotenv from 'dotenv';
+import express from 'express';
+import fs from 'fs';
+import passport from 'passport';
+import logger from 'mean-logger';
+import io from 'socket.io';
+
+import config from './config/config';
+import expressConfig from './config/express';
+import router from './config/routes';
+import passportConfig from './config/passport';
+import socketConfig from './config/socket/socket';
+
+dotenv.config();
 
 /**
  * Main application entry file.
@@ -49,7 +51,7 @@ const walk = (path) => {
 walk(modelsPath);
 
 // bootstrap passport config
-require('./config/passport')(passport);
+passportConfig(passport);
 
 const app = express();
 
@@ -68,8 +70,7 @@ const { port } = config;
 const server = app.listen(port);
 const ioObj = io.listen(server, { log: false });
 // game logic handled here
-require('./config/socket/socket')(ioObj);
-
+socketConfig(ioObj);
 
 // Initializing logger
 logger.init(app, passport, mongoose);

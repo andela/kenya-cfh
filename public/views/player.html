@@ -16,11 +16,7 @@
         </div>
         <div class="col-sm-9" style="font-size:18px;font-weight:900">
           <span>{{ player.username | upperFirstLetter }}</span>
-          <span>{{ player.points}}/{{game.pointLimit }}</span>
-
-          <span ng-show="isPlayer($index)" id="player-star">
-            YOU
-          </span>
+          <p style="font-size:14px">{{ player.points}}/{{game.pointLimit }}</p>
           </p>
         </div>
       </div>
