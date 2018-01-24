@@ -12,6 +12,12 @@ gulp.task('bower', () => {
   bower().pipe(gulp.dest('./bower_components'));
 });
 
+gulp.task('sass', () => {
+  return gulp.src(['public/css/common.scss'])
+    .pipe(sass())
+    .pipe(gulp.dest('public/css/'))
+});
+
 gulp.task('sass', () => gulp.src(['public/css/common.scss'])
   .pipe(sass())
   .pipe(gulp.dest('public/css/')));
@@ -43,6 +49,7 @@ gulp.task('eslint', () => {
     .pipe(eslint());
 });
 
+  
 gulp.task('angular', () => {
   gulp.src('bower_components/angular/**/*.js')
     .pipe(gulp.dest('./dist/public/lib/angular'));
@@ -53,11 +60,13 @@ gulp.task('angular-bootstrap', () => {
     .pipe(gulp.dest('./dist/public/lib/angular-bootstrap'));
 });
 
+  
 gulp.task('bootstrap', () => {
   gulp.src('bower_components/bootstrap/dist/**/*')
     .pipe(gulp.dest('./dist/public/lib/bootstrap'));
 });
 
+  
 gulp.task('jquery', () => {
   gulp.src('bower_components/jquery/**/*')
     .pipe(gulp.dest('./dist/public/lib/jquery'));
@@ -68,6 +77,12 @@ gulp.task('underscore', () => {
     .pipe(gulp.dest('./dist/public/lib/underscore'));
 });
 
+
+gulp.task('underscore', () => {
+  gulp.src('bower_components/underscore/**/*')
+    .pipe(gulp.dest('./dist/public/lib/underscore'));
+});
+  
 gulp.task('angularUtils', () => {
   gulp.src('bower_components/angular-ui-utils/modules/route/route.js')
     .pipe(gulp.dest('./dist/public/lib/angular-ui-utils/modules'));
@@ -95,6 +110,13 @@ gulp.task('transfer-public', ['sass'], () => {
 
 gulp.task('transfer-bower', ['jquery', 'angular', 'bootstrap', 'angularUtils',
   'underscore', 'angular-bootstrap', 'emojionearea']);
+gulp.task('intro.js', () => {
+  gulp.src('bower_components/introjs/**/*')
+    .pipe(gulp.dest('./public/lib/introjs'));
+});
+
+gulp.task('transfer-bower', ['jquery', 'angular', 'bootstrap', 'angularUtils', 'underscore', 'angular-bootstrap', 'intro.js']);
+  
 gulp.task('mochaTest', () => {
   gulp.src('./dist/test/**/*.js')
     .pipe(mocha({
@@ -117,6 +139,7 @@ gulp.task('nodemon', () => {
     }
   });
 });
+
 
 gulp.task('install', ['bower']);
 
