@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+ 
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+  <!-- Latest compiled and minified CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Advent+Pro|Berkshire+Swash|VT323">
+  <link rel="stylesheet" type="text/css" href="../css/dashboard.css">
+  <link rel="stylesheet" type="text/css" href="../css/animate.css">
+ 
+ 
+  <title>Cards for humanity&nbsp|&nbspPlay Game</title>
+</head>
+ 
+<body>
+  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span> Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand page-scroll" href="#page-top" style="color: red;">CARDS FOR HUMANITY</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a class="page-scroll" href="/#!/app">BACK TO GAME</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+  <div class="row container-fluid" ng-controller="DashboardController">
+    <div class="row col-md-12 text-center">
+      <div class="row">
+        <div class="item tabs" align="center">
+          <button type="button" class="btn btn-default btn-lg" id="games" ng-click="displayGameLog()"> GAMES </button>
+          <button type="button" class="btn btn-default btn-lg" id="leaderboard" ng-click="displayLeaderBoard()"> LEADERBOARD </button>
+          <button type="button" class="btn btn-default btn-lg" id="donations" ng-click="displayDonations()"> DONATIONS </button>
+        </div>
+      </div>
+ 
+      <div style="color:black"class="row child">
+        <div class="board" align="center">
+          <div class="panel-heading panel-dashboard">
+            <span>DASHBOARD</span>
+          </div>
+          <div class="table-responsive">
+            <div class="noDonation col-md-4">
+              <span ng-show="noDonations"> No donations yet
+                <br>
+                <button class="btn" id="mod-btn" style="margin-top:10px">
+                  <a id="btn-link" href="https://www.crowdrise.com/donate/project/cfhio/cards4humanity?widget=true&redirect_to=file%3A%2F%2F%2FUsers%2Fandeladeveloper%2FDesktop%2Fcfh-landingpage%2Fcfh-ui%2FnewIndex.html&stylesheet=&amounts="
+                    target="_blank" >
+                    DONATE
+                  </a>
+                </button>
+              </span>
+            </div>
+            <div class="noDonation col-md-4">
+              <span ng-show="noGameLog"> No games played yet</span>
+            </div>
+            <div class="noDonation col-md-4">
+              <span ng-show="noLeaderBoard"> No leaderboard yet</span>
+            </div>
+            <table class="table table-bordered gamesTable" id="games" ng-show="gameLog">
+              <thead class="games">
+                <th>#</th>
+                <th>GAME ROUND</th>
+                <th>FRIENDS PLAYED WITH</th>
+                <th>WINNER</th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="gameLog in gamesData">
+                  <td>{{gameLogCount[$index]}}</td>
+                  <td>{{gameLog.gameRound}}</td>
+                  <td>
+                    <p ng-repeat="player in gameLog.gamePlayers">{{player}}</p>
+                  </td>
+                  <td>{{gameLog.gameWinner}}</td>
+                </tr>
+              </tbody>
+            </table>
+ 
+            <table class="table table-bordered leaderTable" id="leaderboard" ng-show="leaderBoard">
+              <thead class="games">
+                <th>NAME</th>
+                <th>WINS</th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="leader in leaderBoardData">
+                  <td>{{leader._id}}</td>
+                  <td>{{leader.count}}</td>
+                </tr>
+              </tbody>
+            </table>
+ 
+            <table class="table table-bordered donationsTable" id="donations" ng-show="donations">
+              <thead class="games">
+                <th>USER</th>
+                <th>DONATIONS</th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="donations in donationData">
+                  <td>{{donations.name}}</td>
+                  <td ng-repeat="donated in donations.donations track by $index">{{donated}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
