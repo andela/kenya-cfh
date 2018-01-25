@@ -7,15 +7,20 @@ import {
   checkAvatar,
   avatar,
   create,
+  login,
   searchUser,
   inviteUser,
   addDonation,
   show,
   me,
   user,
+  getDonation
 } from '../app/controllers/users';
 import { requiresLogin } from './middlewares/authorization';
-import saveGameLogs from '../app/controllers/game';
+import {
+  saveGameLogs,
+  getGameLog,
+  getLeaderboard } from '../app/controllers/game';
 import answers from '../app/controllers/answers';
 import { question, showQuestion, all } from '../app/controllers/questions';
 import avatars from '../app/controllers/avatars';
@@ -32,12 +37,13 @@ export default (app, passport) => {
   // Setting up the users api
   app.post('/api/auth/signup', create);
   app.post('/users/avatars', avatar);
-  app.post('/api/auth/login', create);
+  app.post('/api/auth/login', login);
   app.get('/api/search', searchUser);
   app.post('/api/users/invite', inviteUser);
 
   // Donation Routes
   app.post('/donations', addDonation);
+  app.get('/api/v1/donations', requiresLogin, getDonation);
 
   app.post('/users/session', passport.authenticate('local', {
     failureRedirect: '/signin',
@@ -115,4 +121,6 @@ export default (app, passport) => {
 
   // Game route
   app.post('/api/v1/games/:id/start', requiresLogin, saveGameLogs);
+  app.get('/api/v1/games/history', requiresLogin, getGameLog);
+  app.get('/api/v1/games/leaderboard', getLeaderboard);
 };
