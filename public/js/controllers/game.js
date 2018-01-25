@@ -213,27 +213,34 @@ angular.module('mean.system').controller('GameController', [
 
     $scope.gameTour.setOptions({
       steps: [{
-        intro: 'Welcome to cards for humanity (the coolest people call it ' +
-        'CFH). You want to play this game ? Then let me take you on a ' +
-        'quick tour'
+        intro: `Welcome to cards for humanity (the coolest people call it CFH). You want to play this game ? Then let me take you on a quick tour`
       },
 
       {
         element: '#question-container-outer',
-        intro: 'Game needs a minimum of 3 players to start. Wait for the ' +
-        'minimum number of players then start the game. Also when the game ' +
-        'starts, the questions are displayed here'
+        intro: `Game needs a minimum of 3 players to start. Wait for the minimum number of players then start the game. Also when the game starts, the questions are displayed here`
       },
       {
         element: '#timer-container',
-        intro: 'You have 20 seconds to submit an answer. After time out, ' +
-        'the CZAR selects his favorite answer. Whoever submits CZAR\'s ' +
-        'favorite answer wins the round'
+        intro: `You have 20 seconds to submit an answer. After time out, the CZAR selects his favorite answer. Whoever submits CZAR's favorite answer wins the round`
       },
       {
         element: '#answers-container',
         intro: 'These are the rules of the game',
         position: 'top'
+      },
+      {
+        element: '#invite-player-button-container',
+        intro: 'Inviteplayers to join you in the game'
+      },
+      {
+        element: '#chat_window_1',
+        intro: 'Feel free to chat with other players',
+        position: 'top'
+      },
+      {
+        element: '#social-bar-container',
+        intro: 'Meet those you are playing game with'
       },
       {
         element: '#abandon-game-button',
