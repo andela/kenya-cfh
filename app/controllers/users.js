@@ -333,6 +333,36 @@ const inviteUser = (req, res) => {
     }
   });
 };
+
+/**
+ * Gets Donation user have made
+ *
+ * @export
+ *
+ * @param {Object} req
+ * @param {Object} res
+ *
+ * @returns {object} user donations
+ */
+const getDonation = (req, res) => {
+  if (req.decoded) {
+    const userId = req.decoded.id;
+    User.findById({
+      _id: userId
+    })
+      .exec((err, userDonations) => {
+        if (err) {
+          return res.status(500).send({
+            message: 'Donation not succesfully retrieved'
+          });
+        }
+        return res.status(200).json(userDonations);
+      });
+  } else {
+    return res.status(401).send({ message: 'Unauthenticated user' });
+  }
+};
+
 export {
   authCallback,
   signin,
@@ -348,5 +378,6 @@ export {
   me,
   user,
   searchUser,
-  inviteUser
+  inviteUser,
+  getDonation
 };
