@@ -1,8 +1,19 @@
 angular.module('mean.system')
   .controller(
     'AuthenticationController',
-    ['$scope', '$http', '$location', '$window',
-      ($scope, $http, $location, $window) => {
+    ['$scope', '$http', '$location', 'Global', '$window',
+      ($scope, $http, $location, Global, $window) => {
+        $scope.global = Global;
+        $scope.showOptions = true;
+        $scope.showOptions = () => {
+          if (window.localStorage.token || window.user) {
+            $scope.showOptions = false;
+          } else {
+            $scope.showOptions = true;
+          }
+        };
+        $scope.showOptions();
+
         $scope.user = {};
         $scope.validationErrorMessage = [];
         $scope.validationErrorExists = () =>
@@ -26,6 +37,14 @@ angular.module('mean.system')
               $scope.validationErrorMessage.push(name);
               $scope.validationErrorMessage.push(email);
               $scope.validationErrorMessage.push(password);
+            });
+        };
+        $scope.signOut = () => {
+          window.localStorage.removeItem('token');
+          $http.get('/signout')
+            .then(() => {
+              $location.path('/');
+              window.location.reload();
             });
         };
         $scope.login = () => {

@@ -33,7 +33,7 @@ angular.module('mean.system').controller('IndexController', [
     };
 
     $scope.showOptions = () => {
-      if (window.localStorage.token) {
+      if (window.localStorage.token || window.user) {
         $scope.showOptions = false;
       } else {
         $scope.showOptions = true;
@@ -46,16 +46,9 @@ angular.module('mean.system').controller('IndexController', [
     $scope.startGameForRegion = () => {
       localStorage.setItem('selectedRegion', $scope.selectedRegion);
       window.location.href =
-      `/play${$scope.gameMode === 'friends' ? '?custom' : ''}`;
+        `/play${$scope.gameMode === 'friends' ? '?custom' : ''}`;
     };
     $scope.showOptions();
-
-    $scope.signOut = () => {
-      window.localStorage.removeItem('token');
-      $location.path('/');
-      window.location.reload();
-    };
-
     $scope.avatars = [];
   }
 ]);
