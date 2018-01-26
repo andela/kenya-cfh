@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
-import * as avatars from '../../app/controllers/avatars';
 import Game from './game';
 import Player from './player';
 
 
 require('console-stamp')(console, 'm/dd HH:MM:ss');
+// eslint-disable-next-line import/no-dynamic-require
+const avatars = require(`${__dirname}/../../app/controllers/avatars.js`).all();
 
 const DEFAULT_REGION = '59b90186ad7d37a9fb7d3630';
 const User = mongoose.model('User');
